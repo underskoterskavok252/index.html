@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ett helhetsperspektiv - Quiz & Lista</title>
+    <title>Ett helhetsperspektiv - Quiz & Minne</title>
     <style>
         :root {
             --bg-color: #f7fafc;
@@ -11,10 +11,9 @@
             --primary-color: #e06c75;
             --primary-hover: #be5059;
             --card-bg: #ffffff;
-            --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             --border-color: #e2e8f0;
             --nav-bg: #2d3748;
-            --font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --font-family: 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
@@ -30,7 +29,6 @@
             background-color: var(--nav-bg);
             padding: 15px 0;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         nav a {
@@ -38,12 +36,6 @@
             text-decoration: none;
             font-weight: 600;
             padding: 10px 20px;
-            border-radius: 6px;
-            transition: background 0.3s;
-        }
-
-        nav a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .container {
@@ -52,355 +44,184 @@
             padding: 0 20px;
         }
 
-        h1 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
-
-        h2 {
-            color: var(--text-color);
-            font-size: 1.8rem;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
-            margin-top: 60px;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #718096;
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-        }
-
-        .audio-player {
-            background-color: #fff5f5;
-            border: 1px solid var(--primary-color);
-            padding: 20px;
+        h1 { color: var(--primary-color); text-align: center; font-weight: 800; }
+        
+        .box {
+            background-color: var(--card-bg);
+            padding: 25px;
             border-radius: 12px;
-            margin-bottom: 30px;
-            position: sticky;
-            top: 20px;
-            z-index: 100;
-            box-shadow: 0 4px 12px rgba(224, 108, 117, 0.15);
-            display: none;
-        }
-
-        .audio-player.active { display: block; }
-
-        .audio-title {
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .audio-text {
-            font-size: 1.2rem;
-            color: var(--text-color);
-            font-weight: 500;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: var(--card-shadow);
             border: 1px solid var(--border-color);
-            overflow: hidden;
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
-
-        .card:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .card-header {
-            padding: 20px 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.2s;
-        }
-
-        .card-header:hover { background-color: #f7fafc; }
-
-        .sv-title {
-            font-weight: 700;
-            color: var(--primary-color);
-            font-size: 1.2rem;
-        }
-
-        .card-content {
-            padding: 0 25px;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            background-color: #fafcfd;
-        }
-
-        .card.open .card-content {
-            max-height: 500px;
-            padding: 20px 25px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .arrow {
-            font-size: 1.2rem;
-            color: #a0aec0;
-            transition: transform 0.3s;
-        }
-
-        .card.open .arrow {
-            transform: rotate(180deg);
-            color: var(--primary-color);
-        }
-
-        .card-content p {
-            margin: 0;
-            color: var(--text-color);
-            font-size: 1.05rem;
-        }
-
-        #quiz-section {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 14px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border: 1px solid var(--border-color);
-            margin-top: 30px;
-        }
-
-        .question {
-            font-size: 1.3rem;
-            font-weight: 700;
             margin-bottom: 25px;
-            color: var(--text-color);
-            line-height: 1.4;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        .option-btn {
-            background-color: var(--card-bg);
+        /* استایل بخش ثبت نام و خوشامدگویی */
+        .welcome-title { font-size: 1.5rem; color: var(--primary-color); margin-bottom: 10px; }
+        
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
             border: 1px solid var(--border-color);
-            padding: 16px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            text-align: left;
-            color: var(--text-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            font-size: 1rem;
         }
 
-        .option-btn:hover {
-            background-color: #fff5f5;
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .option-btn.correct {
-            background-color: #c6f6d5;
-            color: #22543d;
-            border-color: #81e6d9;
-            font-weight: 700;
-        }
-
-        .option-btn.wrong {
-            background-color: #fed7d7;
-            color: #822727;
-            border-color: #feb2b2;
-        }
-
-        #feedback {
-            margin-top: 25px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            min-height: 1.5em;
-        }
-
-        .next-btn {
-            margin-top: 25px;
+        .btn {
             background-color: var(--primary-color);
             color: white;
             border: none;
             padding: 12px 24px;
             border-radius: 8px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             font-weight: 700;
-            transition: background 0.2s;
-            display: none;
             width: 100%;
         }
+        .btn:hover { background-color: var(--primary-hover); }
 
-        .next-btn:hover { background-color: var(--primary-hover); }
-
-        /* بخش جدید برای نمایش بالاترین امتیاز قبلی */
-        .high-score {
-            text-align: center;
-            background: #edf2f7;
-            padding: 10px;
+        /* استایل کوئیز */
+        .option-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 14px;
             border-radius: 8px;
-            margin-bottom: 20px;
-            font-weight: 600;
-            color: #4a5568;
+            cursor: pointer;
+            text-align: left;
+            margin-bottom: 10px;
+            width: 100%;
+            font-size: 1rem;
         }
+        .option-btn:hover { background-color: #fff5f5; }
+        .option-btn.correct { background-color: #c6f6d5; color: #22543d; font-weight: bold; }
+        .option-btn.wrong { background-color: #fed7d7; color: #822727; }
+
+        /* استایل بخش نظرسنجی */
+        .stars { display: flex; gap: 10px; margin-bottom: 15px; justify-content: center;}
+        .star { font-size: 2rem; cursor: pointer; color: #cbd5e1; }
+        .star.selected { color: #f59e0b; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="index.html">⬅️ Startsida</a>
-    </nav>
+    <nav><a href="index.html">⬅️ Startsida</a></nav>
 
     <div class="container">
         
         <h1>Ett helhetsperspektiv</h1>
-        <p class="subtitle">Träna på begrepp från Kapitel 1. Klicka på korten för att lyssna.</p>
 
-        <div id="high-score-box" class="high-score">🏆 Bästa resultat: Inget sparat än</div>
-
-        <div id="player" class="audio-player">
-            <div class="audio-title">🔊 Nu spelas:</div>
-            <div id="playing-text" class="audio-text"></div>
+        <div id="auth-section" class="box">
+            <div id="register-form">
+                <h2 class="welcome-title">Välkommen! Vad heter du?</h2>
+                <p style="color: #718096;">Skriv ditt namn för att spara dina framsteg på den här enheten.</p>
+                <input type="text" id="user-name-input" placeholder="Ditt namn...">
+                <button class="btn" onclick="registerUser()">Spara och starta</button>
+            </div>
+            <div id="welcome-message" style="display:none; text-align: center;">
+                <h2 class="welcome-title">Hej <span id="display-name"></span>! 👋</h2>
+                <p id="high-score-text">🏆 Bästa resultat: Inget sparat än</p>
+                <button class="btn" style="width:auto; background:#718096;" onclick="clearMemory()">Rensa minne (Logga ut)</button>
+            </div>
         </div>
 
-        <div id="words-list"></div>
+        <div id="quiz-section" class="box" style="display:none;">
+            <h2 style="margin-top:0;">Kunskapstest (Quiz)</h2>
+            <div id="question-text" style="font-weight:bold; font-size:1.2rem; margin-bottom:15px;">Laddar...</div>
+            <div id="options"></div>
+            <div id="feedback" style="margin-top:15px; font-weight:bold;"></div>
+            <button id="next-btn" class="btn" style="display:none; margin-top:15px;" onclick="nextQuestion()">Nästa fråga ➡️</button>
+        </div>
 
-        <h2>Testa dina kunskaper (Quiz)</h2>
-        <div id="quiz-section">
-            <div id="question-text" class="question">Laddar fråga...</div>
-            <div id="options" class="options-grid"></div>
-            <div id="feedback"></div>
-            <button id="next-btn" class="next-btn" onclick="nextQuestion()">Nästa fråga ➡️</button>
+        <div id="survey-section" class="box" style="display:none;">
+            <h2 style="margin-top:0;">Vad tycker du om lektionen?</h2>
+            
+            <div class="stars">
+                <span class="star" onclick="rate(1)">★</span>
+                <span class="star" onclick="rate(2)">★</span>
+                <span class="star" onclick="rate(3)">★</span>
+                <span class="star" onclick="rate(4)">★</span>
+                <span class="star" onclick="rate(5)">★</span>
+            </div>
+            
+            <textarea id="feedback-text" rows="4" placeholder="Skriv dina tankar här (frivilligt)..."></textarea>
+            <button class="btn" onclick="saveSurvey()">Skicka feedback</button>
+            <div id="survey-thanks" style="text-align:center; color:#27ae60; font-weight:bold; margin-top:10px; display:none;">Tack för din feedback! ❤️</div>
         </div>
 
     </div>
 
     <script>
-        const begreppData = [
-            { ord: "Helhetsperspektiv", beskrivning: "Att se hela människan och inte bara en funktionsnedsättning eller sjukdom." },
-            { ord: "Demokratisk värdegrund", beskrivning: "Handlar om att alla människor är fria, har lika värde och rätt att vara sig själva." },
-            { ord: "Inkludering", beskrivning: "Att alla får vara med och känna gemenskap oavsett förutsättningar." },
-            { ord: "Delaktighet", beskrivning: "Att ha inflytande och kunna bestämما over sitt eget liv." },
-            { ord: "Autonomi", beskrivning: "Sجودبسندگی. Att individen har rätt att fatta egna beslut." }
-        ];
-
+        // دیتابیس سوالات
         const quizData = [
             {
                 fraga: "Vad innebär 'Inkludering' enligt texten?",
                 svar: [
                     { text: "Att alla får vara med och känna gemenskap oavsett förutsättningar.", correct: true },
-                    { text: "Att man måste göra allting helt själv utan hjälp.", correct: false },
-                    { text: "Att man bara bjuder in vissa personer till en aktivitet.", correct: false }
+                    { text: "Att man måste göra allting helt själv utan hjälp.", correct: false }
                 ]
             },
             {
                 fraga: "Vad betyder 'Autonomi'?",
                 svar: [
                     { text: "Självbestämmande.", correct: true },
-                    { text: "Att lyssna på musik.", correct: false },
                     { text: "Att personalen bestämmer allt.", correct: false }
-                ]
-            },
-            {
-                fraga: "Vad innebär ett 'Helhetsperspektiv'?",
-                svar: [
-                    { text: "Att se hela människan och inte bara sjukdomen eller funktionsnedsättningen.", correct: true },
-                    { text: "Att bara titta på personens fysiska hälsa.", correct: false },
-                    { text: "Att inte bry sig om personens bakgrund.", correct: false }
                 ]
             }
         ];
 
-        // متغیرهای سیستم نمره‌دهی
         let currentQuestionIndex = 0;
         let score = 0;
-        let totalQuestions = quizData.length;
+        let selectedRating = 0;
 
-        // کدهای مربوط به حافظه LocalStorage
-        function loadHighScore() {
-            const savedScore = localStorage.getItem('highScore_helhet');
-            const scoreBox = document.getElementById('high-score-box');
-            if (savedScore) {
-                scoreBox.innerText = `🏆 Bästa resultat: ${savedScore} av ${totalQuestions} rätt`;
+        // کدهای حافظه LocalStorage
+        window.onload = function() {
+            const savedName = localStorage.getItem('student_name');
+            if (savedName) {
+                showWelcome(savedName);
             }
+            loadFeedback();
         }
 
-        function saveHighScore() {
-            const savedScore = localStorage.getItem('highScore_helhet');
-            // اگر امتیازی نبود یا امتیاز جدید از قبلی بزرگتر بود، ذخیره کن
-            if (!savedScore || score > parseInt(savedScore)) {
-                localStorage.setItem('highScore_helhet', score);
-                loadHighScore();
-            }
-        }
-
-        const listContainer = document.getElementById('words-list');
-        begreppData.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <div class="card-header" onclick="toggleCard(this, '${item.ord}. ${item.beskrivning}')">
-                    <span class="sv-title">${item.ord}</span>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="card-content"><p>${item.beskrivning}</p></div>
-            `;
-            listContainer.appendChild(card);
-        });
-
-        function speakText(text) {
-            window.speechSynthesis.cancel();
-            const playerDiv = document.getElementById('player');
-            const playingText = document.getElementById('playing-text');
-            playingText.innerText = text;
-            playerDiv.classList.add('active');
-
-            const msg = new SpeechSynthesisUtterance(text);
-            msg.lang = 'sv-SE';
-            msg.rate = 0.85;
-            msg.onend = function() { playerDiv.classList.remove('active'); };
-            window.speechSynthesis.speak(msg);
-        }
-
-        function toggleCard(header, text) {
-            header.parentElement.classList.toggle('open');
-            if (header.parentElement.classList.contains('open')) { speakText(text); }
-        }
-
-        function generateQuestion() {
-            const feedbackDiv = document.getElementById('feedback');
-            const nextBtn = document.getElementById('next-btn');
-            feedbackDiv.innerText = "";
-            nextBtn.style.display = "none";
-
-            // اگر سوالات تمام شده بود، کارنامه را نشان بده
-            if (currentQuestionIndex >= totalQuestions) {
-                showResultCard();
+        function registerUser() {
+            const nameInput = document.getElementById('user-name-input').value.trim();
+            if (nameInput === "") {
+                alert("Vänligen fyll i ditt namn!");
                 return;
             }
+            localStorage.setItem('student_name', nameInput);
+            showWelcome(nameInput);
+        }
 
+        function showWelcome(name) {
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('welcome-message').style.display = 'block';
+            document.getElementById('quiz-section').style.display = 'block';
+            document.getElementById('survey-section').style.display = 'block';
+            document.getElementById('display-name').innerText = name;
+            
+            const savedScore = localStorage.getItem('quiz_score_helhet');
+            if (savedScore) {
+                document.getElementById('high-score-text').innerText = `🏆 Bästa resultat: ${savedScore} av ${quizData.length} rätt`;
+            }
+            generateQuestion();
+        }
+
+        function clearMemory() {
+            localStorage.clear();
+            location.reload(); // رفرش صفحه
+        }
+
+        // کدهای کنترل کوئیز
+        function generateQuestion() {
             const currentQuiz = quizData[currentQuestionIndex];
-            document.getElementById('question-text').innerText = `Fråga ${currentQuestionIndex + 1}/${totalQuestions}: ${currentQuiz.fraga}`;
-            speakText(`Fråga: ${currentQuiz.fraga}`);
-
+            document.getElementById('question-text').innerText = `Fråga ${currentQuestionIndex + 1}/${quizData.length}: ${currentQuiz.fraga}`;
+            
             const optionsDiv = document.getElementById('options');
             optionsDiv.innerHTML = "";
-            
+            document.getElementById('feedback').innerText = "";
+            document.getElementById('next-btn').style.display = "none";
+
             currentQuiz.svar.forEach(ans => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
@@ -414,71 +235,60 @@
             const buttons = document.querySelectorAll('.option-btn');
             buttons.forEach(btn => btn.disabled = true);
 
-            const feedbackDiv = document.getElementById('feedback');
-            const nextBtn = document.getElementById('next-btn');
-
             if (isCorrect) {
                 selectedBtn.classList.add('correct');
-                feedbackDiv.innerText = "Rätt svar! 🎉";
-                feedbackDiv.style.color = "#27ae60";
-                speakText("Rätt svar!");
+                document.getElementById('feedback').innerText = "Rätt svar! 🎉";
+                document.getElementById('feedback').style.color = "#27ae60";
                 score++;
             } else {
                 selectedBtn.classList.add('wrong');
-                feedbackDiv.innerText = "Fel svar!";
-                feedbackDiv.style.color = "#e74c3c";
-                speakText("Fel svar!");
-                
-                // نشان دادن جواب درست
+                document.getElementById('feedback').innerText = "Fel svar!";
+                document.getElementById('feedback').style.color = "#e74c3c";
                 buttons.forEach(btn => {
-                    const currentQuiz = quizData[currentQuestionIndex];
-                    const correctObj = currentQuiz.svar.find(o => o.correct === true);
-                    if (btn.innerText === correctObj.text) btn.classList.add('correct');
+                    if (btn.innerText === quizData[currentQuestionIndex].svar.find(o => o.correct).text) {
+                        btn.classList.add('correct');
+                    }
                 });
             }
-            nextBtn.style.display = "inline-block";
+            document.getElementById('next-btn').style.display = "block";
         }
 
         function nextQuestion() {
             currentQuestionIndex++;
-            generateQuestion();
+            if (currentQuestionIndex < quizData.length) {
+                generateQuestion();
+            } else {
+                // اتمام کوئیز و ذخیره در حافظه
+                document.getElementById('quiz-section').innerHTML = `<h3>Klar! Du fick ${score} av ${quizData.length} rätt.</h3>`;
+                const topScore = localStorage.getItem('quiz_score_helhet');
+                if (!topScore || score > parseInt(topScore)) {
+                    localStorage.setItem('quiz_score_helhet', score);
+                }
+            }
         }
 
-        // بخش جدید: نمایش کارنامه نهایی
-        function showResultCard() {
-            const quizSection = document.getElementById('quiz-section');
-            const percentage = Math.round((score / totalQuestions) * 100);
-            
-            saveHighScore(); // تلاش برای ذخیره رکورد جدید
-
-            quizSection.innerHTML = `
-                <div style="text-align: center; padding: 20px;">
-                    <h2 style="margin-top:0; color:var(--primary-color);">Testet är klart! 🏁</h2>
-                    <p style="font-size: 1.4rem; font-weight: bold;">Du fick ${score} av ${totalQuestions} rätt.</p>
-                    <p style="font-size: 1.2rem; color: #718096;">Resultat: ${percentage}%</p>
-                    <button class="next-btn" style="display:inline-block; margin-top:20px;" onclick="resetQuiz()">Gör testet igen 🔄</button>
-                </div>
-            `;
-            speakText(`Testet är klart! Du fick ${score} av ${totalQuestions} rätt.`);
+        // کدهای فرم نظرخواهی
+        function rate(stars) {
+            selectedRating = stars;
+            const starElements = document.querySelectorAll('.star');
+            starElements.forEach((el, index) => {
+                el.classList.toggle('selected', index < stars);
+            });
         }
 
-        function resetQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            // برگرداندن ظاهر اولیه بخش کوئیز
-            const quizSection = document.getElementById('quiz-section');
-            quizSection.innerHTML = `
-                <div id="question-text" class="question">Laddar fråga...</div>
-                <div id="options" class="options-grid"></div>
-                <div id="feedback"></div>
-                <button id="next-btn" class="next-btn" onclick="nextQuestion()">Nästa fråga ➡️</button>
-            `;
-            generateQuestion();
+        function saveSurvey() {
+            const comment = document.getElementById('feedback-text').value;
+            localStorage.setItem('feedback_rating', selectedRating);
+            localStorage.setItem('feedback_comment', comment);
+            document.getElementById('survey-thanks').style.display = 'block';
         }
 
-        // لود کردن رکورد قبلی در هنگام باز شدن صفحه
-        loadHighScore();
-        generateQuestion();
+        function loadFeedback() {
+            const savedRating = localStorage.getItem('feedback_rating');
+            const savedComment = localStorage.getItem('feedback_comment');
+            if (savedRating) rate(parseInt(savedRating));
+            if (savedComment) document.getElementById('feedback-text').value = savedComment;
+        }
     </script>
 </body>
 </html>
