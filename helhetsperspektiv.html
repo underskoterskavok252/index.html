@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ett helhetsperspektiv - Quiz & Lista</title>
+    <style>
+        :root {
+            --bg-color: #f7fafc;
+            --text-color: #2d3748;
+            --primary-color: #e06c75; /* یک تم رنگی جدید برای این درس (زرشکی ملایم) */
+            --primary-hover: #be5059;
+            --card-bg: #ffffff;
+            --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --border-color: #e2e8f0;
+            --nav-bg: #2d3748;
+            --font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        h2 {
+            color: var(--text-color);
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-top: 60px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .audio-player {
+            background-color: #fff5f5;
+            border: 1px solid var(--primary-color);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(224, 108, 117, 0.15);
+            display: none;
+        }
+
+        .audio-player.active { display: block; }
+
+        .audio-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .audio-text {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .card-header:hover { background-color: #f7fafc; }
+
+        .sv-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .card-content {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background-color: #fafcfd;
+        }
+
+        .card.open .card-content {
+            max-height: 500px;
+            padding: 20px 25px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .arrow {
+            font-size: 1.2rem;
+            color: #a0aec0;
+            transition: transform 0.3s;
+        }
+
+        .card.open .arrow {
+            transform: rotate(180deg);
+            color: var(--primary-color);
+        }
+
+        .card-content p {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 1.05rem;
+        }
+
+        #quiz-section {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color);
+            margin-top: 30px;
+        }
+
+        .question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--text-color);
+            line-height: 1.4;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-align: left;
+            color: var(--text-color);
+        }
+
+        .option-btn:hover {
+            background-color: #fff5f5;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .option-btn.correct {
+            background-color: #c6f6d5;
+            color: #22543d;
+            border-color: #81e6d9;
+            font-weight: 700;
+        }
+
+        .option-btn.wrong {
+            background-color: #fed7d7;
+            color: #822727;
+            border-color: #feb2b2;
+        }
+
+        #feedback {
+            margin-top: 25px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            min-height: 1.5em;
+        }
+
+        .next-btn {
+            margin-top: 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background 0.2s;
+            display: none;
+            width: 100%;
+        }
+
+        .next-btn:hover { background-color: var(--primary-hover); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">⬅️ Startsida</a>
+    </nav>
+
+    <div class="container">
+        
+        <h1>Ett helhetsperspektiv</h1>
+        <p class="subtitle">Träna på begrepp från Kapitel 1. Klicka på korten för att lyssna.</p>
+
+        <div id="player" class="audio-player">
+            <div class="audio-title">🔊 Nu spelas:</div>
+            <div id="playing-text" class="audio-text"></div>
+        </div>
+
+        <div id="words-list"></div>
+
+        <h2>Testa dina kunskaper (Quiz)</h2>
+        <div id="quiz-section">
+            <div id="question-text" class="question">Laddar fråga...</div>
+            <div id="options" class="options-grid"></div>
+            <div id="feedback"></div>
+            <button id="next-btn" class="next-btn" onclick="generateQuestion()">Nästa fråga ➡️</button>
+        </div>
+
+    </div>
+
+    <script>
+        // دیتابیس کلمات بر اساس پاورپوینت شما
+        const begreppData = [
+            { ord: "Helhetsperspektiv", beskrivning: "Att se hela människan och inte bara en funktionsnedsättning eller sjukdom." },
+            { ord: "Demokratisk värdegrund", beskrivning: "Handlar om att alla människor är fria, har lika värde och rätt att vara sig själva." },
+            { ord: "Inkludering", beskrivning: "Att alla får vara med och känna gemenskap oavsett förutsättningar." },
+            { ord: "Delaktighet", beskrivning: "Att ha inflytande och kunna bestämma över sitt eget liv." },
+            { ord: "Autonomi", beskrivning: "Självbestämmande. Att individen har rätt att fatta egna beslut." }
+        ];
+
+        // دیتابیس سوالات کوییز بر اساس متن شما
+        const quizData = [
+            {
+                fraga: "Vad innebär 'Inkludering' enligt texten?",
+                svar: [
+                    { text: "Att alla får vara med och känna gemenskap oavsett förutsättningar.", correct: true },
+                    { text: "Att man måste göra allting helt själv utan hjälp.", correct: false },
+                    { text: "Att man bara bjuder in vissa personer till en aktivitet.", correct: false }
+                ]
+            },
+            {
+                fraga: "Vad betyder 'Autonomi'?",
+                svar: [
+                    { text: "Självbestämmande.", correct: true },
+                    { text: "Att lyssna på musik.", correct: false },
+                    { text: "Att personalen bestämmer allt.", correct: false }
+                ]
+            },
+            {
+                fraga: "Vad innebär ett 'Helhetsperspektiv'?",
+                svar: [
+                    { text: "Att se hela människan och inte bara sjukdomen eller funktionsnedsättningen.", correct: true },
+                    { text: "Att bara titta på personens fysiska hälsa.", correct: false },
+                    { text: "Att inte bry sig om personens bakgrund.", correct: false }
+                ]
+            }
+        ];
+
+        const listContainer = document.getElementById('words-list');
+        begreppData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-header" onclick="toggleCard(this, '${item.ord}. ${item.beskrivning}')">
+                    <span class="sv-title">${item.ord}</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="card-content"><p>${item.beskrivning}</p></div>
+            `;
+            listContainer.appendChild(card);
+        });
+
+        function speakText(text) {
+            window.speechSynthesis.cancel();
+            const playerDiv = document.getElementById('player');
+            const playingText = document.getElementById('playing-text');
+            playingText.innerText = text;
+            playerDiv.classList.add('active');
+
+            const msg = new SpeechSynthesisUtterance(text);
+            msg.lang = 'sv-SE';
+            msg.rate = 0.85;
+
+            msg.onend = function() { playerDiv.classList.remove('active'); };
+            window.speechSynthesis.speak(msg);
+        }
+
+        function toggleCard(header, text) {
+            header.parentElement.classList.toggle('open');
+            if (header.parentElement.classList.contains('open')) { speakText(text); }
+        }
+
+        let currentQuestionIndex = 0;
+
+        function generateQuestion() {
+            const feedbackDiv = document.getElementById('feedback');
+            const nextBtn = document.getElementById('next-btn');
+            feedbackDiv.innerText = "";
+            feedbackDiv.style.color = "inherit";
+            nextBtn.style.display = "none";
+
+            // انتخاب تصادفی سوالات
+            currentQuestionIndex = Math.floor(Math.random() * quizData.length);
+            const currentQuiz = quizData[currentQuestionIndex];
+            
+            document.getElementById('question-text').innerText = currentQuiz.fraga;
+            speakText(`Fråga: ${currentQuiz.fraga}`);
+
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = "";
+            
+            currentQuiz.svar.forEach(ans => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = ans.text;
+                btn.onclick = () => checkAnswer(btn, ans.correct, ans.text);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedBtn, isCorrect, text) {
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => btn.disabled = true);
+
+            const feedbackDiv = document.getElementById('feedback');
+            const nextBtn = document.getElementById('next-btn');
+
+            if (isCorrect) {
+                selectedBtn.classList.add('correct');
+                feedbackDiv.innerText = "Rätt svar! Bra jobbat! 🎉";
+                feedbackDiv.style.color = "#27ae60";
+                speakText("Rätt svar! Bra jobbat!");
+            } else {
+                selectedBtn.classList.add('wrong');
+                feedbackDiv.innerText = "Fel svar! Försök igen.";
+                feedbackDiv.style.color = "#e74c3c";
+                speakText("Fel svar!");
+                
+                // پیدا کردن و سبز کردن جواب درست
+                const currentQuiz = quizData[currentQuestionIndex];
+                const correctObj = currentQuiz.svar.find(o => o.correct === true);
+                buttons.forEach(btn => {
+                    if (btn.innerText === correctObj.text) btn.classList.add('correct');
+                });
+            }
+            nextBtn.style.display = "inline-block";
+        }
+
+        generateQuestion();
+    </script>
+</body>
+</html>
