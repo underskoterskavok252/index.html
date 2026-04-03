@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Begreppslista Vecka 15 - Quiz & Minne</title>
+    <title>Begreppslista Vecka 15 - Quiz</title>
     <style>
         :root {
             --bg-color: #f7fafc;
@@ -25,7 +25,6 @@
             line-height: 1.6;
         }
 
-        /* منوی ناوبری چسبان */
         nav {
             background-color: #2d3748;
             padding: 0;
@@ -162,7 +161,7 @@
         </div>
 
         <div id="quiz-section" class="box" style="display:none;">
-            <h2 style="margin-top:0;">Kunskapstest (Quiz)</h2>
+            <h2 style="margin-top:0;">Kunskapstest (19 Begrepp)</h2>
             <div id="question-text" style="font-weight:bold; font-size:1.2rem; margin-bottom:15px;">Laddar...</div>
             <div id="options"></div>
             <div id="feedback" style="margin-top:15px; font-weight:bold;"></div>
@@ -170,15 +169,12 @@
         </div>
 
         <div id="survey-section" class="box" style="display:none; text-align: center;">
-            <h2 style="margin-top:0;">Vad tyckte du om den här lektionen?</h2>
-            <p style="color: #718096; font-size: 0.9rem;">Ditt betyg hjälper mig att förbättra innehållet.</p>
-            
+            <h2 style="margin-top:0;">Vad tyckte du om det här testet?</h2>
             <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
                 <button class="survey-btn" onclick="sendQuickFeedback('Tråkigt/Svårt 😕')">😕</button>
                 <button class="survey-btn" onclick="sendQuickFeedback('Bra/Normalt 🙂')">🙂</button>
                 <button class="survey-btn" onclick="sendQuickFeedback('Jättebra! 😍')">😍</button>
             </div>
-            
             <div id="survey-thanks" style="color:#27ae60; font-weight:bold; display:none;">Tack! Ditt betyg har skickats. ❤️</div>
         </div>
 
@@ -187,111 +183,174 @@
     <script>
         const quizData = [
             {
-                fraga: "Vad menas med begreppet 'Likvärdighet' enligt din ordlista?",
+                fraga: "Vilket begrepp innebär att: 'Alla människor har lika värde, rätt att bli respekterade och rätt att vara delaktiga i samhället.'?",
                 svar: [
-                    { text: "Något ska vara lika bra för alla. Alla ska ha rätt till samma vård.", correct: true },
-                    { text: "Alla människor är olika och har unika förmågor.", correct: false },
-                    { text: "Innebär att alla miljöer i samhället ska vara förberedda på att alla är olika.", correct: false },
-                    { text: "Förväntningar, tankar och oskrivna regler om hur någonting är.", correct: false }
-                ]
-            },
-            {
-                fraga: "Vad innebär 'Inkludering'?",
-                svar: [
-                    { text: "Alla människor får vara med och känna sig delaktiga, oavsett funktionsnedsättning, ålder eller bakgrund.", correct: true },
-                    { text: "Innebär att alla miljöer i samhället ska vara förberedda på att alla är olika.", correct: false },
-                    { text: "Att man får tycka och tänka som man vill.", correct: false },
-                    { text: "Att en funktion är nedsatt och fungerar på ett annorند sätt.", correct: false }
-                ]
-            },
-            {
-                fraga: "Hur definieras 'Tillgänglighet' i din begreppslista?",
-                svar: [
-                    { text: "Innebär att alla miljöer i samhället ska vara förberedda på att alla är olika och har olika behov.", correct: true },
-                    { text: "Att få vara med, påverka och känna att man är viktig i sitt eget liv.", correct: false },
-                    { text: "Beskriver hur en person fungerar fysiskt, psykiskt, kognitivt och socialt.", correct: false },
-                    { text: "Att a person får vara med och bestämma över sitt eget liv.", correct: false }
-                ]
-            },
-            {
-                fraga: "Vad beskriver begreppet 'Funktionsförmåga'?",
-                svar: [
-                    { text: "Hur en person fungerar fysiskt, psykiskt, kognitivt och socialt.", correct: true },
-                    { text: "Att en funktion är nedsatt och fungerar på ett annorlunda sätt eller inte alls.", correct: false },
-                    { text: "När omgivningen gör det svårt för en person med funktionsnedsättning.", correct: false },
-                    { text: "Betyder att få vara med, påverka och känna att man är viktig i sitt eget liv.", correct: false }
-                ]
-            },
-            {
-                fraga: "När uppstår ett 'Funktionshinder' enligt listan?",
-                svar: [
-                    { text: "När omgivningen gör det svårt för en person med funktionsnedsättning att vara delaktig på lika villkor.", correct: true },
-                    { text: "När en funktion är nedsatt och fungerar på ett annorlunda sätt eller inte alls.", correct: false },
-                    { text: "När man föds med nedsatt rörelseförmåga, syn eller hörsel.", correct: false },
-                    { text: "När man har svårt att skapa och bibehålla relationer.", correct: false }
-                ]
-            },
-            {
-                fraga: "Vad är rätt definition för 'Funktionsnedsättning'?",
-                svar: [
-                    { text: "Betyder att en funktion är nedsatt och fungerar på ett annorlunda sätt eller inte alls.", correct: true },
-                    { text: "När omgivningen gör det svårt för en person att vara delaktig.", correct: false },
-                    { text: "Förväntningar, tankar och oskrivna regler om hur någonting är.", correct: false },
-                    { text: "Att få vara med, påverka och känna att man är viktig i sitt eget liv.", correct: false }
-                ]
-            },
-            {
-                fraga: "Vad menas med 'Kognitiv funktionsförmåga'?",
-                svar: [
-                    { text: "Handlar om inlärning, minne, att ta in information eller bli störd av olika ljud.", correct: true },
-                    { text: "Handlar om svårigheter med att skapa och bibehålla relationer.", correct: false },
-                    { text: "Innebär nedsatt rörelseförmåga, nedsatt syn eller nedsatt hörsel.", correct: false },
-                    { text: "Handlar om trauma, sexuella övergrepp, krig eller livssituation.", correct: false }
-                ]
-            },
-            {
-                fraga: "Vilket ord beskriver: 'Förväntningar, tankar och oskrivna regler om hur någonting är eller ska vara'?",
-                svar: [
-                    { text: "Normer", correct: true },
-                    { text: "Värderingar", correct: false },
+                    { text: "Demokratisk värdegrund", correct: true },
                     { text: "Levnadsvillkor", correct: false },
+                    { text: "Normer", correct: false },
+                    { text: "Delaktighetsmodellen", correct: false }
+                ]
+            },
+            {
+                fraga: "Vilket begrepp beskriver att: 'Alla människor är olika och har unika förmågor. Det som är olika berikar och behövs för att utveckling ska ske.'?",
+                svar: [
+                    { text: "Lika värde", correct: true },
+                    { text: "Likvärdighet", correct: false },
+                    { text: "Livskvalitet", correct: false },
+                    { text: "Självbestämmande", correct: false }
+                ]
+            },
+            {
+                fraga: "Vilket begrepp innebär att: 'Något ska vara lika bra för alla. Alla ska ha rätt till samma vård.'?",
+                svar: [
+                    { text: "Likvärdighet", correct: true },
+                    { text: "Inkludering", correct: false },
+                    { text: "Tillgänglighet", correct: false },
+                    { text: "Funktionshinder", correct: false }
+                ]
+            },
+            {
+                fraga: "Vilket begrepp betyder att: 'Alla människor får vara med och känna sig delaktiga, oavsett funktionsnedsättning, ålder eller bakgrund.'?",
+                svar: [
+                    { text: "Inkludering", correct: true },
+                    { text: "Normer", correct: false },
+                    { text: "Värderingar", correct: false },
+                    { text: "Delaktighet", correct: false }
+                ]
+            },
+            {
+                fraga: "Vilket begrepp innebär att: 'Alla miljöer i samhället ska vara förberedda på att alla är olika och har olika behov. Alla ska känna sig välkomna och vara en del i sammanhanget.'?",
+                svar: [
+                    { text: "Tillgänglighet", correct: true },
+                    { text: "Funktionsförmåga", correct: false },
+                    { text: "Självbestämmande", correct: false },
+                    { text: "Lika värde", correct: false }
+                ]
+            },
+            {
+                fraga: "Vad handlar 'Levnadsvillkor' om?",
+                svar: [
+                    { text: "Hur en person lever och vilka möjligheter personen har till ett bra och tryggt liv.", correct: true },
+                    { text: "De lagar som bestämmer över vården i Sverige.", correct: false },
+                    { text: "Rätten till självbestämmande och autonomi.", correct: false },
+                    { text: "Oskrivna regler om hur någonting är.", correct: false }
+                ]
+            },
+            {
+                fraga: "Vilket begrepp betyder: 'Att få vara med, påverka och känna att man är viktig i sitt eget liv.'?",
+                svar: [
+                    { text: "Delaktighet", correct: true },
+                    { text: "Normer", correct: false },
+                    { text: "Funktionsförmåga", correct: false },
+                    { text: "Livskvalitet", correct: false }
+                ]
+            },
+            {
+                fraga: "Vilket begrepp beskriver: 'Ett arbetssätt för att stärka inflytande och självbestämmande för personer i behov av stöd' och bygger på 6 delar?",
+                svar: [
+                    { text: "Delaktighetsmodellen", correct: true },
+                    { text: "Normaliseringsprincipen", correct: false },
+                    { text: "Demokratisk värdegrund", correct: false },
+                    { text: "Värderingar", correct: false }
+                ]
+            },
+            {
+                fraga: "Vilket begrepp handlar om: 'Brukarens hälsa och välmående. Att känna sig välkommen, behövd och ha en meningsfull fritid.'?",
+                svar: [
+                    { text: "Livskvalitet", correct: true },
+                    { text: "Levnadsvillkor", correct: false },
+                    { text: "Funktionsförmåga", correct: false },
                     { text: "Likvärdighet", correct: false }
                 ]
             },
             {
-                fraga: "Vad innebär 'Delaktighet'?",
+                fraga: "Vad är 'Normer'?",
                 svar: [
-                    { text: "Att få vara med, påverka och känna att man är viktig i sitt eget liv.", correct: true },
-                    { text: "Att alla människor är olika och har unika förmågor.", correct: false },
-                    { text: "Att man får tycka och tänka som man vill.", correct: false },
-                    { text: "Att en person får vara med och bestämma över sitt eget liv.", correct: false }
+                    { text: "Förväntningar, tankar och oskrivna regler om hur någonting är eller ska vara.", correct: true },
+                    { text: "Skrivna lagar som gäller i ett samhälle.", correct: false },
+                    { text: "Saker man köper i en affär.", correct: false },
+                    { text: "Medfödda fysiska egenskaper.", correct: false }
                 ]
             },
             {
-                fraga: "Enligt Delaktighetsmodellen, vad innebär 'Autonomi'?",
+                fraga: "Vad beskriver begreppet 'Värderingar'?",
                 svar: [
-                    { text: "Rätten till självbestämmande. Man ska kunna påverka sitt liv även om man har en funktionsnedsättning.", correct: true },
-                    { text: "Att man ska vara accepterad av alla och bli lyssnad på i vårdsituationer.", correct: false },
-                    { text: "Att man ska känna lust, ha intresse och en vilja att vara med.", correct: false },
-                    { text: "Att man ska kunna delta och bidra i gemensamma aktiviteter.", correct: false }
+                    { text: "Att man får tycka och tänka som man vill och det styr vad vi gör och vad vi säger.", correct: true },
+                    { text: "Värdet på pengar i samhället.", correct: false },
+                    { text: "De fysiska förutsättningarna i en vårdmiljö.", correct: false },
+                    { text: "Regler som chefen bestämmer på arbetsplatsen.", correct: false }
                 ]
             },
             {
-                fraga: "Vad handlar 'Livskvalitet' om enligt listan?",
+                fraga: "Vilket begrepp beskriver: 'Hur en person fungerar fysiskt, psykiskt, kognitivt och socialt.'?",
                 svar: [
-                    { text: "Brukarens hälsa och välmående. Att känna sig välkommen, behövd och ha en meningsfull fritid.", correct: true },
-                    { text: "Hur en person lever och vilka möjligheter personen har till ett bra och tryggt liv.", correct: false },
-                    { text: "Att alla människor är olika och har unika förmågor.", correct: false },
-                    { text: "Förväntningar, tankار och oskrivna regler om hur någonting är.", correct: false }
+                    { text: "Funktionsförmåga", correct: true },
+                    { text: "Funktionshinder", correct: false },
+                    { text: "Likvärdighet", correct: false },
+                    { text: "Autonomi", correct: false }
                 ]
             },
             {
-                fraga: "Vad är definitionen av 'Självbestämmande'?",
+                fraga: "Vad innebär nedsatt rörelseförmåga, nedsatt syn eller nedsatt hörsel?",
                 svar: [
-                    { text: "Betyder att en person får vara med och bestämma över sitt eget liv.", correct: true },
-                    { text: "Att få vara med, påverka och känna att man är viktig i sitt eget liv.", correct: false },
-                    { text: "Något ska vara lika bra för alla. Alla ska ha rätt till samma vård.", correct: false },
-                    { text: "Att man ska vara accepterad av alla och bli lyssnad på.", correct: false }
+                    { text: "Fysisk funktionsförmåga (nedsatt)", correct: true },
+                    { text: "Kognitiv funktionsförmåga", correct: false },
+                    { text: "Social funktionsförmåga", correct: false },
+                    { text: "Normer", correct: false }
+                ]
+            },
+            {
+                fraga: "Vad påverkar enligt listan den 'Psykiska funktionsförmågan'?",
+                svar: [
+                    { text: "Trauma, sexuellt övergrepp, krig, livssituation.", correct: true },
+                    { text: "Medfödda rörelsehinder och balanssvårigheter.", correct: false },
+                    { text: "Svårigheter med inlärning och minne.", correct: false },
+                    { text: "Hur man skapar nya relationer.", correct: false }
+                ]
+            },
+            {
+                fraga: "Vad innebär nedsatt 'Kognitiv funktionsförmåga'?",
+                svar: [
+                    { text: "Svårt med inlärning, minne, ta in information eller förmedla information.", correct: true },
+                    { text: "Nedsatt syn och hörsel.", correct: false },
+                    { text: "Svårigheter med att skapa och bibehålla relationer.", correct: false },
+                    { text: "Att inte ha rätten till självbestämmande.", correct: false }
+                ]
+            },
+            {
+                fraga: "Vad innebär nedsatt 'Social funktionsförmåga'?",
+                svar: [
+                    { text: "Svårigheter med att skapa och bibehålla relationer.", correct: true },
+                    { text: "Svårigheter med minne och inlärning.", correct: false },
+                    { text: "Problem med att röra sig fritt i samhället.", correct: false },
+                    { text: "Att inte bli accepterad på grund av fördomar.", correct: false }
+                ]
+            },
+            {
+                fraga: "Vilket begrepp betyder: 'Att en funktion är nedsatt och fungerar på ett annorlunda sätt eller inte alls.'?",
+                svar: [
+                    { text: "Funktionsnedsättning", correct: true },
+                    { text: "Funktionshinder", correct: false },
+                    { text: "Inkludering", correct: false },
+                    { text: "Samhandling", correct: false }
+                ]
+            },
+            {
+                fraga: "Vad är ett 'Funktionshinder' enligt texten?",
+                svar: [
+                    { text: "Det uppstår när omgivningen gör det svårt för en person med funktionsnedsättning att vara delaktig på lika villkor.", correct: true },
+                    { text: "Det är samma sak som en medfödd nedsatt funktion.", correct: false },
+                    { text: "Det handlar bara om psykisk ohälsa.", correct: false },
+                    { text: "Att personalen bestämmer allt över brukaren.", correct: false }
+                ]
+            },
+            {
+                fraga: "Vad betyder begreppet 'Självbestämmande'?",
+                svar: [
+                    { text: "Att en person får vara med och bestämma över sitt eget liv.", correct: true },
+                    { text: "Att personalen fattar alla beslut åt personen.", correct: false },
+                    { text: "Att man följer samhällets oskrivna regler.", correct: false },
+                    { text: "Att man har lika rätt till vård som alla andra.", correct: false }
                 ]
             }
         ];
@@ -301,7 +360,7 @@
         let userName = "";
 
         window.onload = function() {
-            const savedName = localStorage.getItem('student_name');
+            const savedName = localStorage.getItem('student_name_v15');
             if (savedName) {
                 userName = savedName;
                 showWelcome(savedName);
@@ -314,7 +373,7 @@
                 alert("Vänligen fyll i ditt namn!");
                 return;
             }
-            localStorage.setItem('student_name', nameInput);
+            localStorage.setItem('student_name_v15', nameInput);
             userName = nameInput;
             showWelcome(nameInput);
         }
@@ -326,7 +385,7 @@
             document.getElementById('survey-section').style.display = 'block';
             document.getElementById('display-name').innerText = name;
             
-            const savedScore = localStorage.getItem('quiz_score_begrepp');
+            const savedScore = localStorage.getItem('quiz_score_v15');
             if (savedScore) {
                 document.getElementById('high-score-text').innerText = `🏆 Bästa resultat: ${savedScore} av ${quizData.length} rätt`;
             }
@@ -385,9 +444,9 @@
             } else {
                 document.getElementById('quiz-section').innerHTML = `<h3>Klar! Du fick ${score} av ${quizData.length} rätt.</h3>`;
                 
-                const topScore = localStorage.getItem('quiz_score_begrepp');
+                const topScore = localStorage.getItem('quiz_score_v15');
                 if (!topScore || score > parseInt(topScore)) {
-                    localStorage.setItem('quiz_score_begrepp', score);
+                    localStorage.setItem('quiz_score_v15', score);
                 }
             }
         }
@@ -403,7 +462,7 @@
                 },
                 body: JSON.stringify({
                     student_name: userName,
-                    lesson: "Begreppslista Vecka 15",
+                    lesson: "Begreppslista v15",
                     rating: ratingText
                 })
             })
