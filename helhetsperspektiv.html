@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vård och Omsorg - Startsida</title>
+    <style>
+        :root {
+            --bg-color: #f7fafc;
+            --text-color: #2d3748;
+            --primary-color: #4299e1;
+            --card-bg: #ffffff;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            padding: 18px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .menu-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+        }
+
+        .menu-link span { margin-right: 10px; font-size: 1.4rem; }
+
+        .link-green { background-color: #48bb78; }
+        .link-green:hover { background-color: #3da36b; }
+
+        .link-red { background-color: #e06c75; }
+        .link-red:hover { background-color: #be5059; }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Vård och Omsorg</h1>
+        <p class="subtitle">En resurssida för undersköterska-studenter. Välj ett ämne för att börja plugga!</p>
+
+        <a href="Begreppslista-v15.html" class="menu-link link-green">
+            <span>📖</span> Begreppslista Vecka 15
+        </a>
+
+        <a href="helhetsperspektiv.html" class="menu-link link-red">
+            <span>🎯</span> Ett helhetsperspektiv
+        </a>
+
+        <div style="background-color: #edf2f7; padding: 25px; border-radius: 12px; margin-top: 40px; text-align: left;">
+            <h2 style="margin-top: 0; color: #2d3748; font-size: 1.5rem;">Hjälp mig att bli bättre! 🚀</h2>
+            <p style="color: #4a5568; font-size: 0.95rem; margin-bottom: 20px;">Har du hittat ett fel eller har du förslag på nya lektioner? Skriv till mig här.</p>
+            
+            <form action="https://formspree.io/f/xqegybzg" method="POST">
+                <label style="font-weight: 600; display: block; margin-bottom: 5px;">Vad gäller det?</label>
+                <select name="typ_av_feedback" style="width:100%; padding:10px; border-radius:6px; border:1px solid #cbd5e1; margin-bottom: 15px;">
+                    <option value="Förslag på ny lektion">Förslag på ny lektion</option>
+                    <option value="Innehållsfel">Innehållsfel</option>
+                    <option value="Tekniskt fel / Ljud">Tekniskt fel / Ljud</option>
+                    <option value="Annat">Annat</option>
+                </select>
+
+                <label style="font-weight: 600; display: block; margin-bottom: 5px;">Ditt meddelande:</label>
+                <textarea name="meddelande" rows="4" style="width:100%; padding:10px; border-radius:6px; border:1px solid #cbd5e1; margin-bottom: 15px;" placeholder="Skriv här..." required></textarea>
+                
+                <button type="submit" style="background-color: #2d3748; color: white; border: none; padding: 12px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%;">Skicka meddelande</button>
+            </form>
+        </div>
+
+        <div class="footer">
+            Denna sida är skapad för att underlätta för klasskamrater.
+        </div>
+    </div>
+
+</body>
+</html>
