@@ -48,7 +48,7 @@
         }
 
         nav .nav-container {
-            max-width: 800px;
+            max-width: 1200px; /* عریض‌تر شدن منوی ناوبری */
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -83,14 +83,34 @@
         .theme-toggle:hover { color: #fff; border-color: #fff; }
 
         .container {
-            max-width: 800px; margin: 30px auto;
+            max-width: 1200px; /* عریض‌تر شدن کادر محتوای اصلی */
+            margin: 30px auto;
             padding: 0 20px; padding-bottom: 50px;
             flex: 1;
         }
 
         h1 { color: var(--primary-color); text-align: center; font-weight: 800; font-size: 2.2rem; margin-bottom: 10px; }
-        .page-subtitle { text-align: center; color: #718096; margin-bottom: 30px; font-size: 1.1rem; }
+        .page-subtitle { text-align: center; color: #718096; margin-bottom: 10px; font-size: 1.1rem; }
         
+        /* استایل بخش تاریخ و ساعت */
+        .datetime-display {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #718096;
+            margin-bottom: 30px;
+            font-weight: 600;
+            background-color: var(--card-bg);
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            left: 50%;
+            position: relative;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        [data-theme="dark"] .datetime-display { color: #a0aec0; }
+
         .box {
             background-color: var(--card-bg); padding: 30px; border-radius: 16px;
             border: 1px solid var(--border-color); margin-bottom: 25px; box-shadow: var(--shadow-md);
@@ -180,6 +200,8 @@
         
         <h1>Ett helhetsperspektiv</h1>
         <p class="page-subtitle">Testa dina kunskaper om likvärdighet, bemötande och historik.</p>
+        
+        <div id="datetime" class="datetime-display">Laddar datum och tid...</div>
 
         <div id="auth-section" class="box">
             <div id="register-form">
@@ -223,7 +245,7 @@
     </div>
 
     <footer>
-        <p>© 2026 Skapad av <span>Mohsen Naderi</span>. Alla rättigheter förbehållna.</p>
+        <p>© 2026 Skapad av <span>Mohsen Naderi</span>. Alla rättigheter förbehållنا.</p>
     </footer>
 
     <script>
@@ -240,7 +262,7 @@
             {
                 fraga: "Som undersköterska ska man ha ett 'kompensatoriskt förhållningssätt'. Vad innebär det?",
                 svar: [
-                    { text: "Att se till så att alla man möter får möjligheter till lika goda upplevelser och en positiv utveckling.", correct: true },
+                    { text: "Att se till så att alla man möter får möjligheter till lika godا upplevelser och en positiv utveckling.", correct: true },
                     { text: "Att man ger ekonomisk kompensation till den som blivit felbehandlad.", correct: false },
                     { text: "Att man kräver att personen ska klara allt själv för att träna upp sig.", correct: false },
                     { text: "Att man utför sysslor åt personen även om hen kan klara det själv.", correct: false }
@@ -324,7 +346,24 @@
         let score = 0;
         let userName = "";
 
+        // تابع نمایش زنده تاریخ و ساعت به زبان سوئدی
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            };
+            document.getElementById('datetime').innerText = now.toLocaleDateString('sv-SE', options);
+        }
+        setInterval(updateDateTime, 1000);
+
         window.onload = function() {
+            updateDateTime();
             const savedName = localStorage.getItem('student_name');
             if (savedName) {
                 userName = savedName;
@@ -369,7 +408,7 @@
             
             const savedScore = localStorage.getItem('quiz_score_helhet');
             if (savedScore) {
-                document.getElementById('high-score-text').innerText = `🏆 Bästa resultat: ${savedScore} av ${quizData.length} rätt`;
+                document.getElementById('high-score-text').innerText = `🏆 Bäستا resultat: ${savedScore} av ${quizData.length} rätt`;
             }
             generateQuestion();
         }
@@ -394,7 +433,6 @@
             document.getElementById('feedback').innerText = "";
             document.getElementById('next-btn').style.display = "none";
 
-            // Shuffla svaren så de inte alltid kommer i samma ordning
             const shuffledSvar = [...currentQuiz.svar].sort(() => Math.random() - 0.5);
 
             shuffledSvar.forEach(ans => {
@@ -441,7 +479,6 @@
             updateProgressBar();
             document.getElementById('next-btn').style.display = "none";
             
-            // Om användaren får alla rätt, kör confetti!
             if (score === quizData.length) {
                 confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
             }
