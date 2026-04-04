@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Begreppslista Vecka 15 - Övning & Quiz</title>
+    <title>Begreppslista Vecka 15 - Premium Edition</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --bg-color: #f0f4f8;
@@ -13,8 +14,17 @@
             --card-bg: #ffffff;
             --border-color: #e2e8f0;
             --nav-bg: #2d3748;
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+        }
+
+        /* استایل‌های تم تاریک */
+        [data-theme="dark"] {
+            --bg-color: #1a202c;
+            --text-color: #f7fafc;
+            --card-bg: #2d3748;
+            --border-color: #4a5568;
+            --nav-bg: #1a202c;
         }
 
         body {
@@ -24,11 +34,11 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         nav {
             background-color: var(--nav-bg);
-            padding: 0;
             box-shadow: var(--shadow-md);
             position: sticky;
             top: 0;
@@ -39,14 +49,18 @@
             max-width: 800px;
             margin: 0 auto;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
         }
+
+        .nav-links { display: flex; }
 
         nav a {
             color: #a0aec0;
             text-decoration: none;
             font-weight: 600;
-            padding: 18px 20px;
+            padding: 18px 15px;
             transition: all 0.3s ease;
             font-size: 0.95rem;
         }
@@ -59,41 +73,50 @@
 
         nav a:hover:not(.active) { color: #ffffff; }
 
+        /* دکمه تم تاریک */
+        .theme-toggle {
+            background: none; border: 1px solid #4a5568; color: #a0aec0;
+            padding: 5px 12px; border-radius: 20px; cursor: pointer;
+            font-size: 0.85rem; font-weight: 600; transition: all 0.2s;
+        }
+        .theme-toggle:hover { color: #fff; border-color: #fff; }
+
         .container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 0 20px;
-            padding-bottom: 50px;
+            max-width: 800px; margin: 30px auto;
+            padding: 0 20px; padding-bottom: 50px;
         }
 
         h1 { color: var(--primary-color); text-align: center; font-weight: 800; font-size: 2.2rem; margin-bottom: 10px; }
         .page-subtitle { text-align: center; color: #718096; margin-bottom: 30px; font-size: 1.1rem; }
         
         .box {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 25px;
-            box-shadow: var(--shadow-md);
+            background-color: var(--card-bg); padding: 30px; border-radius: 16px;
+            border: 1px solid var(--border-color); margin-bottom: 25px; box-shadow: var(--shadow-md);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .section-title { font-size: 1.5rem; color: var(--text-color); margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
 
+        /* کادر جستجو */
+        .search-container { margin-bottom: 20px; position: relative; }
+        .search-input {
+            width: 100%; padding: 12px 15px; border: 2px solid var(--border-color);
+            border-radius: 10px; font-size: 1rem; background-color: var(--card-bg);
+            color: var(--text-color); box-sizing: border-box; transition: border-color 0.2s;
+        }
+        .search-input:focus { border-color: var(--primary-color); outline: none; }
+
         #auth-section { text-align: center; }
         input[type="text"] {
             width: 100%; max-width: 300px; padding: 14px; border: 2px solid var(--border-color); border-radius: 10px;
-            font-size: 1rem; margin-bottom: 15px; transition: border-color 0.2s;
+            font-size: 1rem; margin-bottom: 15px; background-color: var(--card-bg); color: var(--text-color);
         }
-        input[type="text"]:focus { border-color: var(--primary-color); outline: none; }
 
         .btn {
             background-color: var(--primary-color); color: white; border: none; padding: 14px 28px;
             border-radius: 10px; font-size: 1rem; cursor: pointer; font-weight: 700; transition: background 0.2s, transform 0.1s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .btn:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
-        .btn:active { transform: translateY(1px); }
         .btn-secondary { background-color: #718096; }
         .btn-secondary:hover { background-color: #4a5568; }
 
@@ -101,102 +124,43 @@
         #practice-section { display: none; }
         
         .flashcard-container {
-            perspective: 1000px;
-            width: 100%;
-            height: 220px;
-            cursor: pointer;
-            margin-bottom: 20px;
-            position: relative;
+            perspective: 1000px; width: 100%; height: 220px; cursor: pointer; margin-bottom: 20px; position: relative;
         }
 
         .flashcard {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-            box-shadow: var(--shadow-md);
-            border-radius: 16px;
+            width: 100%; height: 100%; position: relative; transition: transform 0.6s;
+            transform-style: preserve-3d; box-shadow: var(--shadow-md); border-radius: 16px;
         }
 
-        .flashcard-container.flip .flashcard {
-            transform: rotateY(180deg);
-        }
+        .flashcard-container.flip .flashcard { transform: rotateY(180deg); }
 
         .front, .back {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            backface-visibility: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 40px;
-            box-sizing: border-box;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
+            width: 100%; height: 100%; position: absolute; backface-visibility: hidden;
+            display: flex; align-items: center; justify-content: center; padding: 20px 40px;
+            box-sizing: border-box; border-radius: 16px; border: 1px solid var(--border-color);
         }
 
-        .front {
-            background-color: var(--card-bg);
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            font-weight: 800;
-        }
+        .front { background-color: var(--card-bg); color: var(--primary-color); font-size: 1.8rem; font-weight: 800; }
+        .back { background-color: var(--primary-color); color: white; transform: rotateY(180deg); font-size: 1.1rem; text-align: center; }
 
-        .back {
-            background-color: var(--primary-color);
-            color: white;
-            transform: rotateY(180deg);
-            font-size: 1.1rem;
-            text-align: center;
-        }
-
-        /* دکمه صدا */
         .speak-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: rgba(255,255,255,0.8);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: all 0.2s;
+            position: absolute; top: 15px; right: 15px; background-color: rgba(255,255,255,0.8);
+            border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.2rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10;
         }
-        .speak-btn:hover {
-            transform: scale(1.1);
-            background-color: #ffffff;
-        }
-        .back .speak-btn {
-            background-color: rgba(0,0,0,0.2);
-            color: white;
-        }
-        .back .speak-btn:hover {
-            background-color: rgba(0,0,0,0.3);
-        }
+        [data-theme="dark"] .speak-btn { background-color: rgba(0,0,0,0.4); color: #fff; }
+        .back .speak-btn { background-color: rgba(0,0,0,0.2); color: white; }
 
         .practice-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 10px;}
         .practice-btn { width: 48%; }
         .btn-quiz-start { width: 100%; margin-top: 30px; background-color: var(--nav-bg); font-size: 1.2rem;}
-        .btn-quiz-start:hover { background-color: #1a202c; }
 
         /* --- Quizsektion --- */
         #quiz-section { display: none; }
         
-        .progress-container {
-            width: 100%; background-color: #e2e8f0; border-radius: 10px; height: 10px; margin-bottom: 20px; overflow: hidden;
-        }
-        .progress-bar {
-            height: 100%; background-color: var(--primary-color); width: 0%; transition: width 0.3s ease;
-        }
+        .progress-container { width: 100%; background-color: #e2e8f0; border-radius: 10px; height: 10px; margin-bottom: 20px; overflow: hidden; }
+        [data-theme="dark"] .progress-container { background-color: #4a5568; }
+        .progress-bar { height: 100%; background-color: var(--primary-color); width: 0%; transition: width 0.3s ease; }
 
         #question-text { font-weight: 700; font-size: 1.3rem; margin-bottom: 20px; color: var(--text-color); }
         
@@ -206,10 +170,11 @@
             font-size: 1rem; transition: all 0.2s; color: var(--text-color); font-weight: 500;
         }
         .option-btn:hover:not(:disabled) { background-color: #f0fff4; border-color: var(--primary-color); transform: translateX(5px); }
+        [data-theme="dark"] .option-btn:hover:not(:disabled) { background-color: #234e32; }
         .option-btn:disabled { cursor: not-allowed; opacity: 0.7; }
         
-        .option-btn.correct { background-color: #c6f6d5; border-color: #22543d; color: #22543d; font-weight: 700; }
-        .option-btn.wrong { background-color: #fed7d7; border-color: #822727; color: #822727; }
+        .option-btn.correct { background-color: #c6f6d5 !important; border-color: #22543d !important; color: #22543d !important; font-weight: 700; }
+        .option-btn.wrong { background-color: #fed7d7 !important; border-color: #822727 !important; color: #822727 !important; }
 
         #feedback { margin-top: 15px; font-weight: 700; font-size: 1.1rem; text-align: center; min-height: 1.6em; }
         #next-btn { display: none; margin-top: 15px; }
@@ -217,8 +182,8 @@
         /* Survey Section */
         #survey-section { display: none; text-align: center; }
         .survey-btn {
-            background-color: #fff; border: 2px solid var(--border-color); font-size: 2rem; padding: 15px 25px;
-            border-radius: 12px; cursor: pointer; transition: all 0.2s; margin: 0 10px;
+            background-color: var(--card-bg); border: 2px solid var(--border-color); font-size: 2rem; padding: 15px 25px;
+            border-radius: 12px; cursor: pointer; transition: all 0.2s; margin: 0 10px; color: var(--text-color);
         }
         .survey-btn:hover { background-color: #f0fff4; border-color: var(--primary-color); transform: scale(1.1); }
         #survey-thanks { color: #27ae60; font-weight: 700; display: none; margin-top: 15px; }
@@ -239,35 +204,41 @@
 
     <nav>
         <div class="nav-container">
-            <a href="index.html">🏠 Hem</a>
-            <a href="Begreppslista-v15.html" class="active">📖 Begrepp v.15</a>
-            <a href="helhetsperspektiv.html">🎯 Helhetsperspektiv</a>
+            <div class="nav-links">
+                <a href="index.html">🏠 Hem</a>
+                <a href="Begreppslista-v15.html" class="active">📖 Begrepp v.15</a>
+                <a href="helhetsperspektiv.html">🎯 Helhetsperspektiv</a>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙 Dark Mode</button>
         </div>
     </nav>
 
     <div class="container">
         
         <h1>Begreppslista Vecka 15</h1>
-        <p class="page-subtitle">Lyssna på uttalet, öva på begreppen och ta sedan quizzet.</p>
+        <p class="page-subtitle">Öva med ljud, sök efter begrepp och testa dig själv med quiz.</p>
 
         <div id="auth-section" class="box">
             <div id="register-form">
                 <h2 class="welcome-title">Välkommen! Vad heter du?</h2>
-                <p style="color: #718096; margin-bottom: 20px;">Skriv ditt namn för att spara dina framsteg.</p>
                 <input type="text" id="user-name-input" placeholder="Ditt namn...">
                 <br>
                 <button class="btn" onclick="registerUser()">Spara och starta</button>
             </div>
             <div id="welcome-message" style="display:none;">
                 <h2 class="welcome-title">Hej <span id="display-name"></span>! 👋</h2>
-                <p id="high-score-text" style="font-weight: 600; color: #4a5568;">🏆 Bästa quiz-resultat: Inget än</p>
-                <button class="btn btn-secondary" style="padding: 8px 18px; font-size: 0.9rem;" onclick="clearMemory()">Logga ut / Rensa minنه</button>
+                <p id="high-score-text" style="font-weight: 600; color: #718096;">🏆 Bästa quiz-resultat: Inget än</p>
+                <button class="btn btn-secondary" style="padding: 8px 18px; font-size: 0.9rem;" onclick="clearMemory()">Logga ut</button>
             </div>
         </div>
 
         <div id="practice-section" class="box">
-            <h2 class="section-title"><span>🧠</span> Steg 1: Övning (Klicka på kortet)</h2>
+            <h2 class="section-title"><span>🧠</span> Steg 1: Övning & Sök</h2>
             
+            <div class="search-container">
+                <input type="text" class="search-input" id="search-box" placeholder="Sök efter ett begrepp (t.ex. Normer)..." oninput="searchBegrepp()">
+            </div>
+
             <div class="flashcard-container" id="flashcard-container">
                 <div class="flashcard" id="flashcard-element" onclick="flipCard()">
                     <div class="front">
@@ -330,7 +301,7 @@
             { begrepp: "Delaktighet", definition: "Att få vara med, påverka och känna att man är viktig i sitt eget liv." },
             { begrepp: "Delaktighetsmodellen", definition: "Ett arbetssätt för att stärka inflytande och självbestämmande, bygger på 6 delar." },
             { begrepp: "Livskvalitet", definition: "Brukarens hälsa och välmående. Att känna sig välkommen, behövd och ha en meningsfull fritid." },
-            { begrepp: "Normer", definition: "Förväntningar, tankار och oskrivna regler om hur någonting är eller ska vara." },
+            { begrepp: "Normer", definition: "Förväntningar, tankar och oskrivna regler om hur någonting är eller ska vara." },
             { begrepp: "Värderingar", definition: "Att man får tycka och tänka som man vill och det styr vad vi gör och vad vi säger." },
             { begrepp: "Funktionsförmåga", definition: "Hur en person fungerar fysiskt, psykiskt, kognitivt och socialt." },
             { begrepp: "Fysisk funktionsförmåga", definition: "Innebär nedsatt rörelseförmåga, nedsatt syn eller nedsatt hörsel." },
@@ -352,7 +323,7 @@
             { fraga: "Vilket begrepp betyder: 'Att få vara med, påverka och känna att man är viktig...'?", svar: [{text:"Delaktighet", correct:true}, {text:"Normer", correct:false}, {text:"Funktionsförmåga", correct:false}, {text:"Livskvalitet", correct:false}] },
             { fraga: "Vilket begrepp beskriver Delaktighetsmodellen?", svar: [{text:"Ett arbetssätt för att stärka inflytande, bygger på 6 delar.", correct:true}, {text:"Normaliseringsprincipen", correct:false}, {text:"Demokratisk värdegrund", correct:false}, {text:"Värderingar", correct:false}] },
             { fraga: "Vilket begrepp handlar om: 'Brukarens hälsa och välmående, känna sig välkommen.'?", svar: [{text:"Livskvalitet", correct:true}, {text:"Levnadsvillkor", correct:false}, {text:"Funktionsförmåga", correct:false}, {text:"Likvärdighet", correct:false}] },
-            { fraga: "Vad är 'Normer'?", svar: [{text:"Förväntningar, tankar och oskrivna regler.", correct:true}, {text:"Skrivna lagar.", correct:false}, {text:"Saker man köper.", correct:false}, {text:"Medfödda egenskaper.", correct:false}] },
+            { fraga: "Vad är 'Normer'?", svar: [{text:"Förväntningar, tankar och oskrivna regler.", correct:true}, {text:"Skrivna lagar.", correct:false}, {text:"Saker man köپر.", correct:false}, {text:"Medfödda egenskaper.", correct:false}] },
             { fraga: "Vad beskriver begreppet 'Värderingar'?", svar: [{text:"Att man får tycka och tänka som man vill, styr vad vi gör.", correct:true}, {text:"Värdet på pengar.", correct:false}, {text:"Fysiska förutsättningar.", correct:false}, {text:"Regler chefen bestämmer.", correct:false}] },
             { fraga: "Vilket begrepp beskriver: 'Hur en person fungerar fysiskt, psykiskt, kognitivt...'?", svar: [{text:"Funktionsförmåga", correct:true}, {text:"Funktionshinder", correct:false}, {text:"Likvärdighet", correct:false}, {text:"Autonomi", correct:false}] },
             { fraga: "Vad innebär nedsatt rörelseförmåga, nedsatt syn eller hörsel?", svar: [{text:"Fysisk funktionsförmåga (nedsatt)", correct:true}, {text:"Kognitiv funktionsförmåga", correct:false}, {text:"Social funktionsförmåga", correct:false}, {text:"Normer", correct:false}] },
@@ -361,7 +332,7 @@
             { fraga: "Vad innebär nedsatt 'Social funktionsförmåga'?", svar: [{text:"Svårigheter med att skapa och bibehålla relationer.", correct:true}, {text:"Svårigheter med minne.", correct:false}, {text:"Problem att röra sig fritt.", correct:false}, {text:"Att nicht bli accepterad.", correct:false}] },
             { fraga: "Vilket begrepp betyder: 'Att en funktion är nedsatt och fungerar annorlunda.'?", svar: [{text:"Funktionsnedsättning", correct:true}, {text:"Funktionshinder", correct:false}, {text:"Inkludering", correct:false}, {text:"Samhandling", correct:false}] },
             { fraga: "Vad är ett 'Funktionshinder' enligt texten?", svar: [{text:"Uppstår när omgivningen gör det svårt för en person.", correct:true}, {text:"Samma sak som medfödd nedsättning.", correct:false}, {text:"Bara psykisk ohälsa.", correct:false}, {text:"Personalen bestämmer allt.", correct:false}] },
-            { fraga: "Vad betyder begreppet 'Självbestämmande'?", svar: [{text:"Att en person får vara med och bestämma över sitt eget liv.", correct:true}, {text:"Att personalen fattar alla beslut.", correct:false}, {text:"Att man följer oskrivna regler.", correct:false}, {text:"Lika rätt till vård.", correct:false}] }
+            { fraga: "Vad betyder begreppet 'Självbestämmande'?", svar: [{text:"Att en person får vara med och bestämma över sitt eget liv.", correct:true}, {text:"Att personalen fattar alla beslut.", correct:false}, {text:"Att man följer oskrivna regler.", correct:false}, {text:"Lika rätt till våرد.", correct:false}] }
         ];
 
         let userName = "";
@@ -371,10 +342,26 @@
 
         window.onload = function() {
             const savedName = localStorage.getItem('student_name_v15');
-            if (savedName) {
-                userName = savedName;
-                showWelcome(savedName);
-            }
+            if (savedName) { userName = savedName; showWelcome(savedName); }
+            // اعمال تم تاریک در صورت ذخیره بودن
+            if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); document.getElementById('theme-btn').innerText = "☀️ Light Mode"; }
+        }
+
+        // تم تاریک و روشن
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            let targetTheme = "light";
+            if (currentTheme !== "dark") { targetTheme = "dark"; document.getElementById('theme-btn').innerText = "☀️ Light Mode"; }
+            else { document.getElementById('theme-btn').innerText = "🌙 Dark Mode"; }
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            localStorage.setItem('theme', targetTheme);
+        }
+
+        // جستجوی واژه‌ها
+        function searchBegrepp() {
+            const query = document.getElementById('search-box').value.toLowerCase();
+            const index = begreppData.findIndex(item => item.begrepp.toLowerCase().includes(query));
+            if (index !== -1 && query !== "") { currentCardIndex = index; updateCard(); }
         }
 
         function registerUser() {
@@ -389,11 +376,8 @@
             document.getElementById('register-form').style.display = 'none';
             document.getElementById('welcome-message').style.display = 'block';
             document.getElementById('display-name').innerText = name;
-            
             const savedScore = localStorage.getItem('quiz_score_v15');
-            if (savedScore) {
-                document.getElementById('high-score-text').innerText = `🏆 Bästa quiz-resultat: ${savedScore} av ${quizData.length} rätt`;
-            }
+            if (savedScore) { document.getElementById('high-score-text').innerText = `🏆 Bästa quiz-resultat: ${savedScore} av ${quizData.length} rätt`; }
             startPracticeSection();
         }
 
@@ -415,48 +399,30 @@
             document.getElementById('current-card-num').innerText = currentCardIndex + 1;
         }
 
-        function flipCard() {
-            document.getElementById('flashcard-container').classList.toggle('flip');
-        }
+        function flipCard() { document.getElementById('flashcard-container').classList.toggle('flip'); }
 
         function nextCard() {
-            if (currentCardIndex < begreppData.length - 1) {
-                currentCardIndex++;
-                updateCard();
-            } else {
-                alert("Du har gått igenom alla kort! Klicka på 'Starta Quiz' när du är redo.");
-            }
+            if (currentCardIndex < begreppData.length - 1) { currentCardIndex++; updateCard(); }
         }
 
         function prevCard() {
-            if (currentCardIndex > 0) {
-                currentCardIndex--;
-                updateCard();
-            }
+            if (currentCardIndex > 0) { currentCardIndex--; updateCard(); }
         }
 
-        // قابلیت خواندن متن به زبان سوئدی
         function speakText(event, side) {
-            event.stopPropagation(); // جلوگیری از چرخیدن کارت موقع کلیک روی دکمه صدا
-            
+            event.stopPropagation();
             const text = side === 'front' ? begreppData[currentCardIndex].begrepp : begreppData[currentCardIndex].definition;
-            
-            // کنسل کردن صداهای قبلی در حال پخش
             window.speechSynthesis.cancel();
-            
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'sv-SE'; // تنظیم زبان روی سوئدی
-            utterance.rate = 0.9; // سرعت خواندن کمی آرام‌تر برای یادگیری بهتر
-            
+            utterance.lang = 'sv-SE';
+            utterance.rate = 0.9;
             window.speechSynthesis.speak(utterance);
         }
 
         function startQuizSection() {
             document.getElementById('practice-section').style.display = 'none';
             document.getElementById('quiz-section').style.display = 'block';
-            currentQuestionIndex = 0;
-            score = 0;
-            generateQuestion();
+            currentQuestionIndex = 0; score = 0; generateQuestion();
         }
 
         function updateProgressBar() {
@@ -468,15 +434,11 @@
             updateProgressBar();
             const currentQuiz = quizData[currentQuestionIndex];
             document.getElementById('question-text').innerText = `Fråga ${currentQuestionIndex + 1}/${quizData.length}: ${currentQuiz.fraga}`;
-            
             const optionsDiv = document.getElementById('options');
-            optionsDiv.innerHTML = "";
-            document.getElementById('feedback').innerText = "";
-            document.getElementById('feedback').style.color = "inherit";
+            optionsDiv.innerHTML = ""; document.getElementById('feedback').innerText = "";
             document.getElementById('next-btn').style.display = "none";
 
             const shuffledSvar = [...currentQuiz.svar].sort(() => Math.random() - 0.5);
-
             shuffledSvar.forEach(ans => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
@@ -500,9 +462,7 @@
                 document.getElementById('feedback').innerText = "Fel svar!";
                 document.getElementById('feedback').style.color = "#e74c3c";
                 buttons.forEach(btn => {
-                    if (quizData[currentQuestionIndex].svar.find(o => o.correct).text === btn.innerText) {
-                        btn.classList.add('correct');
-                    }
+                    if (quizData[currentQuestionIndex].svar.find(o => o.correct).text === btn.innerText) { btn.classList.add('correct'); }
                 });
             }
             document.getElementById('next-btn').style.display = "block";
@@ -510,17 +470,19 @@
 
         function nextQuestion() {
             currentQuestionIndex++;
-            if (currentQuestionIndex < quizData.length) {
-                generateQuestion();
-            } else {
-                showResults();
-            }
+            if (currentQuestionIndex < quizData.length) { generateQuestion(); }
+            else { showResults(); }
         }
 
         function showResults() {
             updateProgressBar();
             document.getElementById('next-btn').style.display = "none";
             
+            // افکت انفجار کاغذ رنگی در صورت موفقیت
+            if (score >= 15) {
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            }
+
             let message = "";
             if (score === quizData.length) message = "Helt fantastiskt! Alla rätt! 🌟";
             else if (score >= 15) message = "Grymt! Mycket bra jobbat! 🔥";
@@ -537,10 +499,7 @@
             `;
             
             const topScore = localStorage.getItem('quiz_score_v15');
-            if (!topScore || score > parseInt(topScore)) {
-                localStorage.setItem('quiz_score_v15', score);
-            }
-            
+            if (!topScore || score > parseInt(topScore)) { localStorage.setItem('quiz_score_v15', score); }
             document.getElementById('survey-section').style.display = 'block';
         }
 
@@ -549,7 +508,7 @@
             fetch(formspreeUrl, {
                 method: 'POST',
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-                body: JSON.stringify({ student_name: userName, lesson: "Begreppslista v15 (Audio+Practice+Quiz)", rating: ratingText, score: `${score}/${quizData.length}` })
+                body: JSON.stringify({ student_name: userName, lesson: "Begreppslista v15 (Premium Edition)", rating: ratingText, score: `${score}/${quizData.length}` })
             })
             .then(response => { if (response.ok) { document.getElementById('survey-thanks').style.display = 'block'; } });
         }
