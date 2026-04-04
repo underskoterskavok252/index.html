@@ -6,12 +6,22 @@
     <title>Vård och Omsorg - Startsida</title>
     <style>
         :root {
-            --bg-color: #f7fafc;
+            --bg-color: #f0f4f8;
             --text-color: #2d3748;
             --primary-color: #4299e1;
             --card-bg: #ffffff;
-            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            --font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --border-color: #e2e8f0;
+            --nav-bg: #2d3748;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a202c;
+            --text-color: #f7fafc;
+            --card-bg: #2d3748;
+            --border-color: #4a5568;
+            --nav-bg: #1a202c;
         }
 
         body {
@@ -20,60 +30,93 @@
             color: var(--text-color);
             margin: 0;
             padding: 0;
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             min-height: 100vh;
         }
 
+        nav {
+            background-color: var(--nav-bg);
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .nav-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-links { display: flex; }
+
+        nav a {
+            color: #a0aec0;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 18px 15px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        nav a.active {
+            color: #ffffff;
+            border-bottom: 3px solid #48bb78;
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        nav a:hover:not(.active) { color: #ffffff; }
+
+        .theme-toggle {
+            background: none; border: 1px solid #4a5568; color: #a0aec0;
+            padding: 5px 12px; border-radius: 20px; cursor: pointer;
+            font-size: 0.85rem; font-weight: 600; transition: all 0.2s;
+        }
+        .theme-toggle:hover { color: #fff; border-color: #fff; }
+
         .container {
-            width: 90%;
-            max-width: 600px;
-            background-color: var(--card-bg);
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
+            max-width: 600px; margin: 40px auto;
+            padding: 0 20px; padding-bottom: 50px;
+            flex: 1;
+        }
+
+        .box {
+            background-color: var(--card-bg); padding: 40px; border-radius: 16px;
+            border: 1px solid var(--border-color); margin-bottom: 25px; box-shadow: var(--shadow-md);
+            transition: background-color 0.3s, border-color 0.3s;
             text-align: center;
-            margin: 40px 0;
         }
 
-        h1 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
-
-        .subtitle {
-            color: #718096;
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
+        h1 { color: var(--primary-color); text-align: center; font-weight: 800; font-size: 2.3rem; margin-bottom: 10px; margin-top: 0; }
+        .subtitle { text-align: center; color: #718096; margin-bottom: 30px; font-size: 1.1rem; }
+        
         .menu-link {
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            padding: 18px 25px;
-            border-radius: 10px;
+            padding: 16px 25px;
+            border-radius: 12px;
             color: white;
-            font-weight: 600;
-            font-size: 1.2rem;
+            font-weight: 700;
+            font-size: 1.1rem;
             margin-bottom: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-md);
         }
 
         .menu-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
         }
 
-        .menu-link span { margin-right: 10px; font-size: 1.4rem; }
+        .menu-link span { margin-right: 12px; font-size: 1.4rem; }
 
         .link-green { background-color: #48bb78; }
         .link-green:hover { background-color: #3da36b; }
@@ -81,51 +124,128 @@
         .link-red { background-color: #e06c75; }
         .link-red:hover { background-color: #be5059; }
 
-        .footer {
-            margin-top: 50px;
-            font-size: 0.9rem;
+        /* بخش فرم بازخورد */
+        .feedback-section {
+            background-color: var(--bg-color);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 40px;
+            text-align: left;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s;
+        }
+
+        .feedback-section h2 { margin-top: 0; color: var(--text-color); font-size: 1.4rem; font-weight: 700; }
+        .feedback-section p { color: #718096; font-size: 0.95rem; margin-bottom: 20px; }
+
+        label { font-weight: 600; display: block; margin-bottom: 5px; color: var(--text-color); font-size: 0.9rem; }
+        
+        select, textarea {
+            width: 100%; padding: 12px; border-radius: 8px; border: 2px solid var(--border-color);
+            margin-bottom: 15px; box-sizing: border-box; font-family: inherit; font-size: 0.95rem;
+            background-color: var(--card-bg); color: var(--text-color); transition: border-color 0.2s;
+        }
+        select:focus, textarea:focus { border-color: var(--primary-color); outline: none; }
+
+        .btn-submit {
+            background-color: var(--nav-bg); color: white; border: none; padding: 14px 20px;
+            border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; font-size: 1rem;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn-submit:hover { background-color: #4a5568; transform: translateY(-1px); }
+        [data-theme="dark"] .btn-submit { background-color: #4299e1; }
+        [data-theme="dark"] .btn-submit:hover { background-color: #3182ce; }
+
+        /* بخش کپی‌رایت انتهای صفحه */
+        footer {
+            background-color: var(--nav-bg);
             color: #a0aec0;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+        }
+        footer span { color: #ffffff; font-weight: 600; }
+
+        @media (max-width: 600px) {
+            .box { padding: 25px 20px; }
+            h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Vård och Omsorg</h1>
-        <p class="subtitle">En resurssida för undersköterska-studenter. Välj ett ämne för att börja plugga!</p>
-
-        <a href="Begreppslista-v15.html" class="menu-link link-green">
-            <span>📖</span> Begreppslista Vecka 15
-        </a>
-
-        <a href="helhetsperspektiv.html" class="menu-link link-red">
-            <span>🎯</span> Ett helhetsperspektiv
-        </a>
-
-        <div style="background-color: #edf2f7; padding: 25px; border-radius: 12px; margin-top: 40px; text-align: left;">
-            <h2 style="margin-top: 0; color: #2d3748; font-size: 1.5rem;">Hjälp mig att bli bättre! 🚀</h2>
-            <p style="color: #4a5568; font-size: 0.95rem; margin-bottom: 20px;">Har du hittat ett fel eller har du förslag på nya lektioner? Skriv till mig här.</p>
-            
-            <form action="https://formspree.io/f/xqegybzg" method="POST">
-                <label style="font-weight: 600; display: block; margin-bottom: 5px;">Vad gäller det?</label>
-                <select name="typ_av_feedback" style="width:100%; padding:10px; border-radius:6px; border:1px solid #cbd5e1; margin-bottom: 15px;">
-                    <option value="Förslag på ny lektion">Förslag på ny lektion</option>
-                    <option value="Innehållsfel">Innehållsfel</option>
-                    <option value="Tekniskt fel / Ljud">Tekniskt fel / Ljud</option>
-                    <option value="Annat">Annat</option>
-                </select>
-
-                <label style="font-weight: 600; display: block; margin-bottom: 5px;">Ditt meddelande:</label>
-                <textarea name="meddelande" rows="4" style="width:100%; padding:10px; border-radius:6px; border:1px solid #cbd5e1; margin-bottom: 15px;" placeholder="Skriv här..." required></textarea>
-                
-                <button type="submit" style="background-color: #2d3748; color: white; border: none; padding: 12px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%;">Skicka meddelande</button>
-            </form>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="index.html" class="active">🏠 Hem</a>
+                <a href="Begreppslista-v15.html">📖 Begrepp v.15</a>
+                <a href="helhetsperspektiv.html">🎯 Helhetsperspektiv</a>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙 Dark Mode</button>
         </div>
+    </nav>
 
-        <div class="footer">
-            Denna sida är skapad för att underlätta för klasskamrater.
+    <div class="container">
+        <div class="box">
+            <h1>Vård och Omsorg</h1>
+            <p class="subtitle">En resurssida för undersköterska-studenter. Välj ett ämne för att börja plugga!</p>
+
+            <a href="Begreppslista-v15.html" class="menu-link link-green">
+                <span>📖</span> Begreppslista Vecka 15
+            </a>
+
+            <a href="helhetsperspektiv.html" class="menu-link link-red">
+                <span>🎯</span> Ett helhetsperspektiv
+            </a>
+
+            <div class="feedback-section">
+                <h2>Hjälp mig att bli bättre! 🚀</h2>
+                <p>Har du hittat ett fel eller har du förslag på nya lektioner? Skriv till mig här.</p>
+                
+                <form action="https://formspree.io/f/xqegybzg" method="POST">
+                    <label>Vad gäller det?</label>
+                    <select name="typ_av_feedback">
+                        <option value="Förslag på ny lektion">Förslag på ny lektion</option>
+                        <option value="Innehållsfel">Innehållsfel</option>
+                        <option value="Tekniskt fel / Ljud">Tekniskt fel / Ljud</option>
+                        <option value="Annat">Annat</option>
+                    </select>
+
+                    <label>Ditt meddelande:</label>
+                    <textarea name="meddelande" rows="4" placeholder="Skriv här..." required></textarea>
+                    
+                    <button type="submit" class="btn-submit">Skicka meddelande</button>
+                </form>
+            </div>
         </div>
     </div>
 
+    <footer>
+        <p>© 2026 Skapad av <span>Mohsen Naderi</span>. Alla rättigheter förbehållna.</p>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-btn').innerText = "☀️ Light Mode";
+            }
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            let targetTheme = "light";
+            if (currentTheme !== "dark") {
+                targetTheme = "dark";
+                document.getElementById('theme-btn').innerText = "☀️ Light Mode";
+            } else {
+                document.getElementById('theme-btn').innerText = "🌙 Dark Mode";
+            }
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            localStorage.setItem('theme', targetTheme);
+        }
+    </script>
 </body>
 </html>
