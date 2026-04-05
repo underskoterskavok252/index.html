@@ -30,137 +30,47 @@
             font-family: var(--font-family);
             background-color: var(--bg-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            transition: background-color 0.3s, color 0.3s;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            margin: 0; padding: 0; line-height: 1.6;
+            display: flex; flex-direction: column; min-height: 100vh;
         }
 
-        nav {
-            background-color: var(--nav-bg);
-            box-shadow: var(--shadow-md);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-
+        nav { background-color: var(--nav-bg); box-shadow: var(--shadow-md); position: sticky; top: 0; z-index: 1000; }
+        nav .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
         .nav-links { display: flex; }
+        nav a { color: #a0aec0; text-decoration: none; font-weight: 600; padding: 18px 15px; font-size: 0.95rem; }
+        nav a.active { color: #ffffff; border-bottom: 3px solid var(--primary-color); }
 
-        nav a {
-            color: #a0aec0;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 18px 15px;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-        }
-
-        nav a.active {
-            color: #ffffff;
-            border-bottom: 3px solid var(--primary-color);
-            background-color: rgba(255,255,255,0.05);
-        }
-
-        nav a:hover:not(.active) { color: #ffffff; }
-
-        .theme-toggle {
-            background: none; border: 1px solid #4a5568; color: #a0aec0;
-            padding: 5px 12px; border-radius: 20px; cursor: pointer;
-            font-size: 0.85rem; font-weight: 600; transition: all 0.2s;
-        }
-        .theme-toggle:hover { color: #fff; border-color: #fff; }
-
-        .container {
-            max-width: 1200px; /* حداکثر عرض کل صفحه */
-            margin: 30px auto;
-            padding: 0 20px; padding-bottom: 50px;
-            flex: 1;
-        }
-
-        h1 { color: var(--primary-color); text-align: center; font-weight: 800; font-size: 2.2rem; margin-bottom: 10px; }
-        .page-subtitle { text-align: center; color: #718096; margin-bottom: 30px; font-size: 1.1rem; }
+        .container { max-width: 1200px !important; margin: 30px auto; padding: 0 20px 50px 20px; flex: 1; }
         
-        .box {
-            background-color: var(--card-bg); padding: 30px; border-radius: 16px;
-            border: 1px solid var(--border-color); margin-bottom: 25px; box-shadow: var(--shadow-md);
-            transition: background-color 0.3s, border-color 0.3s;
-        }
+        .box { background-color: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 25px; box-shadow: var(--shadow-md); }
+        .section-title { font-size: 1.5rem; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
 
-        .section-title { font-size: 1.5rem; color: var(--text-color); margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-
-        .btn {
-            background-color: var(--primary-color); color: white; border: none; padding: 12px 24px;
-            border-radius: 10px; font-size: 1rem; cursor: pointer; font-weight: 700; transition: background 0.2s, transform 0.1s;
-        }
-        .btn:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
-        .btn-secondary { background-color: #718096; }
-        .btn-secondary:hover { background-color: #4a5568; }
-
-        /* لیست لغات */
-        .term-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px; border-bottom: 1px solid var(--border-color);
-        }
-        .term-item:last-child { border-bottom: none; }
-        .swedish-word { font-weight: 700; color: var(--primary-color); font-size: 1.1rem; }
-        .swedish-explanation { color: var(--text-color); font-size: 0.95rem; max-width: 70%; text-align: right; }
-
-        /* 🔥 تغییرات اساسی برای عریض‌تر شدن فلش‌کارت 🔥 */
+        /* فلش کارت کاملا عریض */
         .flashcard-area { display: flex; justify-content: center; margin: 30px 0; }
         .flashcard {
-            width: 100%; 
-            max-width: 800px; /* قبلاً ۵۰۰ پیکسل بود، الان بزرگتر شده */
-            height: 300px; /* ارتفاع هم کمی بیشتر شد تا متن جا بگیرد */
-            perspective: 1000px; cursor: pointer;
+            width: 100% !important; 
+            max-width: 850px !important; /* پهن شدن قطعی کارت */
+            height: 320px; perspective: 1000px; cursor: pointer;
         }
-        .flashcard-inner {
-            position: relative; width: 100%; height: 100%; text-align: center;
-            transition: transform 0.6s; transform-style: preserve-3d;
-            box-shadow: var(--shadow-md); border-radius: 16px;
-        }
+        .flashcard-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
         .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
         .flashcard-front, .flashcard-back {
             position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
             display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 35px; box-sizing: border-box;
-            border-radius: 16px; background-color: var(--card-bg); border: 2px solid var(--border-color);
+            border-radius: 16px; background-color: var(--card-bg); border: 2px solid var(--border-color); box-shadow: var(--shadow-md);
         }
         .flashcard-back { transform: rotateY(180deg); }
         
-        /* कोईز */
-        .progress-container { width: 100%; background-color: #e2e8f0; border-radius: 10px; height: 10px; margin-bottom: 20px; overflow: hidden; }
-        [data-theme="dark"] .progress-container { background-color: #4a5568; }
-        .progress-bar { height: 100%; background-color: var(--primary-color); width: 0%; transition: width 0.3s ease; }
+        .btn { background-color: var(--primary-color); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; }
+        .btn-secondary { background-color: #718096; }
 
-        .option-btn {
-            background-color: var(--card-bg); border: 2px solid var(--border-color); padding: 16px;
-            border-radius: 12px; cursor: pointer; text-align: left; margin-bottom: 12px; width: 100%;
-            font-size: 1rem; transition: all 0.2s; color: var(--text-color); font-weight: 500;
-        }
-        .option-btn:hover:not(:disabled) { background-color: #fff5f5; border-color: var(--primary-color); transform: translateX(5px); }
-        [data-theme="dark"] .option-btn:hover:not(:disabled) { background-color: #442a2c; }
-        .option-btn.correct { background-color: #c6f6d5 !important; border-color: #22543d !important; color: #22543d !important; font-weight: 700; }
-        .option-btn.wrong { background-color: #fed7d7 !important; border-color: #822727 !important; color: #822727 !important; }
+        .term-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color); }
+        .swedish-word { font-weight: 700; color: var(--primary-color); }
+        .swedish-explanation { color: var(--text-color); max-width: 70%; text-align: right; }
 
-        .result-screen { text-align: center; }
-        .result-score { font-size: 3rem; font-weight: 800; color: var(--primary-color); margin: 20px 0; }
-
-        footer {
-            background-color: var(--nav-bg); color: #a0aec0; text-align: center;
-            padding: 20px; font-size: 0.85rem; margin-top: auto; border-top: 1px solid var(--border-color);
-        }
-        footer span { color: #ffffff; font-weight: 600; }
+        .option-btn { background-color: var(--card-bg); border: 2px solid var(--border-color); padding: 16px; border-radius: 12px; cursor: pointer; margin-bottom: 12px; width: 100%; text-align: left; color: var(--text-color); }
+        .option-btn.correct { background-color: #c6f6d5 !important; color: #22543d !important; }
+        .option-btn.wrong { background-color: #fed7d7 !important; color: #822727 !important; }
     </style>
 </head>
 <body>
@@ -170,68 +80,56 @@
             <div class="nav-links">
                 <a href="index.html">🏠 Hem</a>
                 <a href="Begreppslista-v15.html" class="active">📖 Begrepp v.15</a>
-                <a href="helhetsperspektiv.html">🎯 Helhetsperspektiv</a>
             </div>
-            <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙 Dark Mode</button>
         </div>
     </nav>
 
     <div class="container">
+        <h1 style="text-align:center; color:var(--primary-color);">Begreppslista vecka 15</h1>
         
-        <h1>Begreppslista vecka 15</h1>
-        <p class="page-subtitle">Öva på viktiga begrepp, använd flashcards och gör quiz.</p>
-
         <div id="study-section" class="box">
-            <h2 class="section-title"><span>📖</span> Studera begrepp</h2>
+            <h2 class="section-title">📖 Studera begrepp</h2>
             <div id="terms-list"></div>
             <div style="text-align: center; margin-top: 20px;">
                 <button class="btn" onclick="startFlashcards()">Öva med Flashcards 🗂️</button>
-                <button class="btn btn-secondary" style="margin-left: 10px;" onclick="startQuiz()">Gör Begreppsquiz 🎯</button>
+                <button class="btn btn-secondary" style="margin-left:10px;" onclick="startQuiz()">Gör Begreppsquiz 🎯</button>
             </div>
         </div>
 
         <div id="flashcard-section" class="box" style="display:none;">
-            <h2 class="section-title"><span>🗂️</span> Flashcards</h2>
+            <h2 class="section-title">🗂️ Flashcards</h2>
             <div class="flashcard-area">
                 <div class="flashcard" onclick="flipCard()">
                     <div class="flashcard-inner">
                         <div class="flashcard-front">
-                            <h2 style="color: var(--primary-color); font-size: 1.8rem;" id="card-front-text">Begrepp</h2>
-                            <p style="color: #718096; font-size: 1rem; margin-top: 15px;">Klicka för att se förklaringen</p>
+                            <h2 style="color: var(--primary-color); font-size: 2rem;" id="card-front-text">Begrepp</h2>
+                            <p style="color: #718096; margin-top: 15px;">Klicka för att se förklaringen</p>
                         </div>
                         <div class="flashcard-back">
-                            <p id="card-back-swedish" style="font-size: 1.25rem; line-height: 1.6; font-weight: 500;">Svensk förklaring</p>
+                            <p id="card-back-swedish" style="font-size: 1.3rem; line-height: 1.6; font-weight: 500;">Svensk förklaring</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div style="text-align: center;">
                 <button class="btn btn-secondary" onclick="prevCard()">⬅️ Föregående</button>
-                <span id="card-counter" style="margin: 0 15px; font-weight: 600;">1 / 10</span>
+                <span id="card-counter" style="margin: 0 15px; font-weight: 600;">1 / 19</span>
                 <button class="btn" onclick="nextCard()">Nästa ➡️</button>
                 <br><br>
-                <button class="btn btn-secondary" style="font-size: 0.9rem;" onclick="showStudy()">Tillbaka till listان</button>
+                <button class="btn btn-secondary" style="font-size: 0.9rem;" onclick="showStudy()">Tillbaka till listan</button>
             </div>
         </div>
 
         <div id="quiz-section" class="box" style="display:none;">
-            <h2 class="section-title"><span>🎯</span> Begreppsquiz</h2>
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
+            <h2 class="section-title">🎯 Begreppsquiz</h2>
             <div id="quiz-content">
                 <div id="question-text" style="font-weight:700; font-size:1.2rem; margin-bottom:20px;">Laddar...</div>
                 <div id="options"></div>
-                <div id="feedback" style="font-weight:700; text-align:center; min-height:1.5em; margin-top:15px;"></div>
+                <div id="feedback" style="font-weight:700; text-align:center; margin-top:15px;"></div>
                 <button id="next-btn" class="btn" style="display:none; margin: 15px auto 0 auto;" onclick="nextQuestion()">Nästa fråga ➡️</button>
             </div>
         </div>
-
     </div>
-
-    <footer>
-        <p>© 2026 Skapad av <span>Mohsen Naderi</span>. Alla rättigheter förbehållna.</p>
-    </footer>
 
     <script>
         const termsData = [
@@ -242,7 +140,7 @@
             { term: "* Tillgänglighet", sv: "Innebär att alla miljöer i samhället ska vara förberedda på att alla är olika och har olika behov. Alla ska känna sig välkomna." },
             { term: "Levnadsvillkor", sv: "Handlar om hur en person lever och vilka möjligheter personen har till ett bra och tryggt liv." },
             { term: "* Delaktighet", sv: "Betyder att få vara med, påverka och känna att man är viktig i sitt eget liv." },
-            { term: "Delaktighetsmodellen", sv: "Är ett arbetssätt för att stärka inflytande och självbestämmande för personer i behov av stöd. Bygger på 6 delar." },
+            { term: "Delaktighetsmodellen", sv: "Är ett arbetssätt för att stärka inflyتande och självbestämmande för personer i behov av stöd. Bygger på 6 delar." },
             { term: "Livskvalitet", sv: "Handlar om brukarens hälsa och välmående. Att känna sig välkommen, behövd och ha en meningsfull fritid." },
             { term: "Normer", sv: "Förväntningar, tankar och oskrivna regler om hur någonting är eller ska vara." },
             { term: "Värderingar", sv: "Att man får tycka och tänka som man vill och det styr vad vi gör och vad vi säger." },
@@ -261,13 +159,7 @@
         let score = 0;
         let quizQuestions = [];
 
-        window.onload = function() {
-            populateTermsList();
-            if (localStorage.getItem('theme') === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                document.getElementById('theme-btn').innerText = "☀️ Light Mode";
-            }
-        }
+        window.onload = function() { populateTermsList(); }
 
         function populateTermsList() {
             const listDiv = document.getElementById('terms-list');
@@ -275,27 +167,14 @@
             termsData.forEach(item => {
                 const row = document.createElement('div');
                 row.className = 'term-item';
-                row.innerHTML = `
-                    <span class="swedish-word">${item.term}</span>
-                    <span class="swedish-explanation">${item.sv}</span>
-                `;
+                row.innerHTML = `<span class="swedish-word">${item.term}</span><span class="swedish-explanation">${item.sv}</span>`;
                 listDiv.appendChild(row);
             });
         }
 
-        function showStudy() {
-            document.getElementById('study-section').style.display = 'block';
-            document.getElementById('flashcard-section').style.display = 'none';
-            document.getElementById('quiz-section').style.display = 'none';
-        }
-
-        function startFlashcards() {
-            document.getElementById('study-section').style.display = 'none';
-            document.getElementById('flashcard-section').style.display = 'block';
-            currentCardIndex = 0;
-            updateFlashcard();
-        }
-
+        function showStudy() { document.getElementById('study-section').style.display = 'block'; document.getElementById('flashcard-section').style.display = 'none'; document.getElementById('quiz-section').style.display = 'none'; }
+        function startFlashcards() { document.getElementById('study-section').style.display = 'none'; document.getElementById('flashcard-section').style.display = 'block'; currentCardIndex = 0; updateFlashcard(); }
+        
         function updateFlashcard() {
             const card = document.querySelector('.flashcard');
             card.classList.remove('flipped');
@@ -307,44 +186,17 @@
             }, 150);
         }
 
-        function flipCard() {
-            document.querySelector('.flashcard').classList.toggle('flipped');
-        }
+        function flipCard() { document.querySelector('.flashcard').classList.toggle('flipped'); }
+        function nextCard() { if (currentCardIndex < termsData.length - 1) { currentCardIndex++; updateFlashcard(); } }
+        function prevCard() { if (currentCardIndex > 0) { currentCardIndex--; updateFlashcard(); } }
 
-        function nextCard() {
-            if (currentCardIndex < termsData.length - 1) {
-                currentCardIndex++;
-                updateFlashcard();
-            }
-        }
-
-        function prevCard() {
-            if (currentCardIndex > 0) {
-                currentCardIndex--;
-                updateFlashcard();
-            }
-        }
-
-        function startQuiz() {
-            document.getElementById('study-section').style.display = 'none';
-            document.getElementById('quiz-section').style.display = 'block';
-            currentQuizIndex = 0;
-            score = 0;
-            quizQuestions = [...termsData].sort(() => Math.random() - 0.5).slice(0, 10);
-            generateQuizQuestion();
-        }
+        function startQuiz() { document.getElementById('study-section').style.display = 'none'; document.getElementById('quiz-section').style.display = 'block'; currentQuizIndex = 0; score = 0; quizQuestions = [...termsData].sort(() => Math.random() - 0.5).slice(0, 10); generateQuizQuestion(); }
 
         function generateQuizQuestion() {
-            const progress = (currentQuizIndex / quizQuestions.length) * 100;
-            document.getElementById('progress-bar').style.width = progress + '%';
-
             const current = quizQuestions[currentQuizIndex];
             document.getElementById('question-text').innerText = `Vilket begrepp matchar denna förklaring?\n"${current.sv}"`;
-            
             const optionsDiv = document.getElementById('options');
-            optionsDiv.innerHTML = "";
-            document.getElementById('feedback').innerText = "";
-            document.getElementById('next-btn').style.display = "none";
+            optionsDiv.innerHTML = ""; document.getElementById('feedback').innerText = ""; document.getElementById('next-btn').style.display = "none";
 
             let options = [current];
             while (options.length < 4) {
@@ -365,61 +217,13 @@
         function checkAnswer(selectedBtn, isCorrect) {
             const buttons = document.querySelectorAll('.option-btn');
             buttons.forEach(btn => btn.disabled = true);
-
-            if (isCorrect) {
-                selectedBtn.classList.add('correct');
-                document.getElementById('feedback').innerText = "Rätt svar! 🎉";
-                document.getElementById('feedback').style.color = "#27ae60";
-                score++;
-            } else {
-                selectedBtn.classList.add('wrong');
-                document.getElementById('feedback').innerText = "Fel svar!";
-                document.getElementById('feedback').style.color = "#e74c3c";
-                buttons.forEach(btn => {
-                    if (btn.innerText === quizQuestions[currentQuizIndex].term) {
-                        btn.classList.add('correct');
-                    }
-                });
-            }
+            if (isCorrect) { selectedBtn.classList.add('correct'); document.getElementById('feedback').innerText = "Rätt svar! 🎉"; score++; } 
+            else { selectedBtn.classList.add('wrong'); document.getElementById('feedback').innerText = "Fel svar!"; buttons.forEach(btn => { if (btn.innerText === quizQuestions[currentQuizIndex].term) btn.classList.add('correct'); }); }
             document.getElementById('next-btn').style.display = "block";
         }
 
-        function nextQuestion() {
-            currentQuizIndex++;
-            if (currentQuizIndex < quizQuestions.length) {
-                generateQuizQuestion();
-            } else {
-                showQuizResults();
-            }
-        }
-
-        function showQuizResults() {
-            document.getElementById('progress-bar').style.width = '100%';
-            if (score === quizQuestions.length) {
-                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            }
-            document.getElementById('quiz-content').innerHTML = `
-                <div class="result-screen">
-                    <h3>Quizet är klart!</h3>
-                    <div class="result-score">${score} / ${quizQuestions.length}</div>
-                    <button class="btn" onclick="startQuiz()">Gör om testet 🔄</button>
-                    <button class="btn btn-secondary" style="margin-left:10px;" onclick="showStudy()">Tillbaka till listan</button>
-                </div>
-            `;
-        }
-
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            let targetTheme = "light";
-            if (currentTheme !== "dark") {
-                targetTheme = "dark";
-                document.getElementById('theme-btn').innerText = "☀️ Light Mode";
-            } else {
-                document.getElementById('theme-btn').innerText = "🌙 Dark Mode";
-            }
-            document.documentElement.setAttribute('data-theme', targetTheme);
-            localStorage.setItem('theme', targetTheme);
-        }
+        function nextQuestion() { currentQuizIndex++; if (currentQuizIndex < quizQuestions.length) generateQuizQuestion(); else showQuizResults(); }
+        function showQuizResults() { document.getElementById('quiz-content').innerHTML = `<div style="text-align:center;"><h3>Quizet är klart!</h3><div style="font-size:3rem; font-weight:800; color:var(--primary-color); margin:20px 0;">${score} / ${quizQuestions.length}</div><button class="btn" onclick="startQuiz()">Gör om testet 🔄</button></div>`; }
     </script>
 </body>
 </html>
