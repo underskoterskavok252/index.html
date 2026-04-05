@@ -1,25 +1,192 @@
-<div style="background-color: #ffffff; padding: 20px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); text-align: center; margin-bottom: 25px;">
-    <h2 id="live-date" style="color: #e06c75; margin-bottom: 5px; font-size: 1.4rem;">Laddar datum...</h2>
-    <h1 id="live-time" style="color: #2d3748; font-size: 3rem; margin: 0; font-weight: 800;">00:00:00</h1>
-</div>
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Min Studieportal</title>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --text-color: #2d3748;
+            --primary-color: #e06c75;
+            --primary-hover: #be5059;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --nav-bg: #2d3748;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+        }
 
-<script>
-    function updateClock() {
-        const now = new Date();
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-links { display: flex; }
+
+        nav a {
+            color: #a0aec0;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 18px 15px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        nav a.active {
+            color: #ffffff;
+            border-bottom: 3px solid var(--primary-color);
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            padding-bottom: 50px;
+            flex: 1;
+        }
+
+        .box {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .menu-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: var(--text-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .menu-card h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        footer {
+            background-color: var(--nav-bg);
+            color: #a0aec0;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="index.html" class="active">🏠 Hem</a>
+                <a href="Begreppslista-v15.html">📖 Begrepp v.15</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
         
-        // فرمت کردن تاریخ به زبان سوئدی
-        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        const swedishDate = now.toLocaleDateString('sv-SE', dateOptions);
-        
-        // فرمت کردن ساعت
-        const swedishTime = now.toLocaleTimeString('sv-SE');
+        <div class="box" style="text-align: center;">
+            <h2 id="live-date" style="color: #e06c75; margin-bottom: 5px; font-size: 1.4rem;">Laddar datum...</h2>
+            <h1 id="live-time" style="color: #2d3748; font-size: 3rem; margin: 0; font-weight: 800;">00:00:00</h1>
+        </div>
 
-        // بزرگ کردن حرف اول روز هفته
-        document.getElementById('live-date').innerText = swedishDate.charAt(0).toUpperCase() + swedishDate.slice(1);
-        document.getElementById('live-time').innerText = swedishTime;
-    }
+        <div class="box">
+            <h1 style="color: var(--primary-color); margin-top: 0;">Välkommen till Studieportalen</h1>
+            <p>Här kan du öva på viktiga begrepp och förbereda dig inför dina studier.</p>
+            
+            <div class="grid-container">
+                <a href="Begreppslista-v15.html" class="menu-card">
+                    <h2>Begreppslista v.15</h2>
+                    <p>Studera begrepp, använd flashcards och gör quiz för vecka 15.</p>
+                </a>
+            </div>
+        </div>
 
-    // آپدیت ثانیه‌ای ساعت
-    setInterval(updateClock, 1000);
-    updateClock(); // اجرای فوری با لود شدن صفحه
-</script>
+    </div>
+
+    <footer>
+        <p>© 2026 Skapad av <span>Mohsen Naderi</span>. Alla rättigheter förbehållna.</p>
+    </footer>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            
+            // آرایه‌های دستی برای نمایش قطعی تاریخ به زبان سوئدی (بدون خطا)
+            const weekdays = ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"];
+            const months = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+            
+            const dayName = weekdays[now.getDay()];
+            const day = now.getDate();
+            const monthName = months[now.getMonth()];
+            const year = now.getFullYear();
+            
+            // ترکیب بخش‌ها به عنوان مثال: Söndag 5 april 2026
+            const fullDateStr = dayName.charAt(0).toUpperCase() + dayName.slice(1) + " " + day + " " + monthName + " " + year;
+            
+            // فرمت کردن ساعت
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const fullTimeStr = hours + ":" + minutes + ":" + seconds;
+
+            // تزریق به صفحه
+            document.getElementById('live-date').innerText = fullDateStr;
+            document.getElementById('live-time').innerText = fullTimeStr;
+        }
+
+        // آپدیت هر ثانیه
+        setInterval(updateClock, 1000);
+        updateClock(); // اجرای فوری
+    </script>
+</body>
+</html>
