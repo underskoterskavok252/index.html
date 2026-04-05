@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Begreppslista v.15 - Premium Edition</title>
+    <title>Begreppslista v.15 - Full Width</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
@@ -17,22 +17,39 @@
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
         }
+
+        /* استایل‌های تم تاریک */
+        [data-theme="dark"] {
+            --bg-color: #1a202c;
+            --text-color: #f7fafc;
+            --card-bg: #2d3748;
+            --border-color: #4a5568;
+            --nav-bg: #1a202c;
+        }
+
         body {
             font-family: var(--font-family); background-color: var(--bg-color); color: var(--text-color);
             margin: 0; padding: 0; line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
         }
         nav { background-color: var(--nav-bg); box-shadow: var(--shadow-md); position: sticky; top: 0; z-index: 1000; }
-        nav .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-        .nav-links { display: flex; }
-        nav a { color: #a0aec0; text-decoration: none; font-weight: 600; padding: 18px 15px; font-size: 0.95rem; }
-        nav a.active { color: #ffffff; border-bottom: 3px solid var(--primary-color); }
-        .container { max-width: 1200px !important; margin: 30px auto; padding: 0 20px 50px 20px; flex: 1; }
+        nav .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 60px; }
+        .nav-links { display: flex; height: 100%; align-items: center; }
+        nav a { color: #a0aec0; text-decoration: none; font-weight: 600; padding: 0 15px; height: 100%; display: flex; align-items: center; font-size: 0.95rem; }
+        nav a.active { color: #ffffff; border-bottom: 4px solid var(--primary-color); background-color: rgba(255,255,255,0.05); }
+
+        .dark-mode-btn {
+            background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff;
+            padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 5px;
+        }
+
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px 50px 20px; flex: 1; }
         .box { background-color: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 25px; box-shadow: var(--shadow-md); }
         .section-title { font-size: 1.5rem; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
         
-        /* فلش کارت عریض */
+        /* 🔥 فلش کارت کاملا عریض و ریسپانسیو 🔥 */
         .flashcard-area { display: flex; justify-content: center; margin: 30px 0; width: 100%; }
-        .flashcard { width: 100% !important; max-width: 100% !important; height: 350px; perspective: 1000px; cursor: pointer; }
+        .flashcard { width: 100% !important; height: 350px; perspective: 1000px; cursor: pointer; }
         .flashcard-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
         .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
         .flashcard-front, .flashcard-back {
@@ -52,9 +69,9 @@
         .option-btn.correct { background-color: #c6f6d5 !important; color: #22543d !important; }
         .option-btn.wrong { background-color: #fed7d7 !important; color: #822727 !important; }
         
-        /* دکمه بلندگو */
         .speaker-btn { background: #e2e8f0; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; margin-top: 15px; }
         .speaker-btn:hover { background: #cbd5e1; }
+        [data-theme="dark"] .speaker-btn { background: #4a5568; color: white; }
     </style>
 </head>
 <body>
@@ -63,7 +80,9 @@
             <div class="nav-links">
                 <a href="index.html">🏠 Hem</a>
                 <a href="Begreppslista-v15.html" class="active">📖 Begrepp v.15</a>
+                <a href="index.html">🎯 Helhetsperspektiv</a>
             </div>
+            <button class="dark-mode-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
         </div>
     </nav>
 
@@ -96,7 +115,6 @@
             </div>
             <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 15px;">
                 <button class="speaker-btn" onclick="speakCurrentWord()" title="Lyssna">🔊</button>
-                
                 <div>
                     <button class="btn btn-secondary" onclick="prevCard()">⬅️ Föregående</button>
                     <span id="card-counter" style="margin: 0 15px; font-weight: 600;">1 / 19</span>
@@ -135,7 +153,7 @@
             { term: "Psykisk funktionsförmåga", sv: "Trauma, sexuellt övergrepp, krig, livssituation." },
             { term: "Kognitiv funktionsförmåga", sv: "Svårt med inlärning, minne, svårt att ta in information eller förmedla information." },
             { term: "Social funktionsförmåga", sv: "Svårigheter med att skapa och bibehålla relationer." },
-            { term: "Funktionsnedsättning", sv: "Betyder att en funktion är nedsatt och fungerar på ett annorunda sätt eller inte alls." },
+            { term: "Funktionsnedsättning", sv: "Betyder att en funktion är nedsatt och fungerar på ett annorlunda sätt eller inte alls." },
             { term: "Funktionshinder", sv: "Uppstår när omgivningen gör det svårt för en person med funktionsnedsättning att vara delaktig." },
             { term: "Självbestämmande", sv: "Betyder att en person får vara med och bestämma över sitt eget liv." }
         ];
@@ -158,7 +176,6 @@
             });
         }
 
-        // 🔊 تابع خواندن صوتی 
         function speakSwedish(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -172,21 +189,12 @@
         function speakCurrentWord() {
             const item = termsData[currentCardIndex];
             const card = document.querySelector('.flashcard');
-            if (card.classList.contains('flipped')) {
-                speakSwedish(item.sv);
-            } else {
-                speakSwedish(item.term);
-            }
+            if (card.classList.contains('flipped')) speakSwedish(item.sv);
+            else speakSwedish(item.term);
         }
 
         function showStudy() { document.getElementById('study-section').style.display = 'block'; document.getElementById('flashcard-section').style.display = 'none'; document.getElementById('quiz-section').style.display = 'none'; }
-        
-        function startFlashcards() { 
-            document.getElementById('study-section').style.display = 'none'; 
-            document.getElementById('flashcard-section').style.display = 'block'; 
-            currentCardIndex = 0; 
-            updateFlashcard(); 
-        }
+        function startFlashcards() { document.getElementById('study-section').style.display = 'none'; document.getElementById('flashcard-section').style.display = 'block'; currentCardIndex = 0; updateFlashcard(); }
         
         function updateFlashcard() {
             const card = document.querySelector('.flashcard');
@@ -208,7 +216,6 @@
         function generateQuizQuestion() {
             const current = quizQuestions[currentQuizIndex];
             document.getElementById('question-text').innerText = `Vilket begrepp matchar denna förklaring?\n"${current.sv}"`;
-            
             const optionsDiv = document.getElementById('options');
             optionsDiv.innerHTML = ""; document.getElementById('feedback').innerText = ""; document.getElementById('next-btn').style.display = "none";
 
@@ -238,6 +245,17 @@
 
         function nextQuestion() { currentQuizIndex++; if (currentQuizIndex < quizQuestions.length) generateQuizQuestion(); else showQuizResults(); }
         function showQuizResults() { document.getElementById('quiz-content').innerHTML = `<div style="text-align:center;"><h3>Quizet är klart!</h3><div style="font-size:3rem; font-weight:800; color:var(--primary-color); margin:20px 0;">${score} / ${quizQuestions.length}</div><button class="btn" onclick="startQuiz()">Gör om testet 🔄</button></div>`; }
+
+        // اسکریپت دارک مود
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            localStorage.setItem('theme', targetTheme);
+        }
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
     </script>
 </body>
 </html>
