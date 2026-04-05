@@ -36,6 +36,9 @@
         nav a:hover, nav a.active { color: #ffffff; }
         nav a.active { border-bottom: 4px solid var(--primary-color); background-color: rgba(255,255,255,0.05); }
 
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .user-name { color: #a0aec0; font-size: 0.9rem; font-weight: 600; }
+
         .dark-mode-btn {
             background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff;
             padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 5px;
@@ -69,13 +72,16 @@
                 <a href="Begreppslista-v15.html">📖 Begrepp v.15</a>
                 <a href="Helhetsperspektiv.html">🎯 Helhetsperspektiv</a>
             </div>
-            <button class="dark-mode-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+            <div class="nav-right">
+                <span class="user-name">👤 underskoterskavok252</span>
+                <button class="dark-mode-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+            </div>
         </div>
     </nav>
 
     <div class="container">
         <div class="box">
-            <h1>Välkommen underskoterskavok252!</h1>
+            <h1>Välkommen till Studieportalen</h1>
             <p>Välj ett område i menyn ovan eller klicka på knappen nedan för att börja öva på begreppen inför vecka 15!</p>
             <a href="Begreppslista-v15.html" class="btn">Gå till Begreppslista 🚀</a>
         </div>
