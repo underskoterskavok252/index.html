@@ -3,22 +3,28 @@
     <h1 id="live-time" style="color: #2d3748; font-size: 3rem; margin: 0; font-weight: 800;">00:00:00</h1>
 </div>
 
+<div style="background-color: #ffffff; padding: 20px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); text-align: center; margin-bottom: 25px;">
+    <h2 id="live-date" style="color: #e06c75; margin-bottom: 5px; font-size: 1.4rem;">Laddar datum...</h2>
+    <h1 id="live-time" style="color: #2d3748; font-size: 3rem; margin: 0; font-weight: 800;">00:00:00</h1>
+</div>
+
 <script>
     function updateClock() {
         const now = new Date();
         
-        // فرمت تاریخ به زبان سوئدی
+        // فرمت کردن تاریخ به زبان سوئدی
         const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         const swedishDate = now.toLocaleDateString('sv-SE', dateOptions);
         
-        // فرمت ساعت
+        // فرمت کردن ساعت
         const swedishTime = now.toLocaleTimeString('sv-SE');
 
+        // بزرگ کردن حرف اول روز هفته
         document.getElementById('live-date').innerText = swedishDate.charAt(0).toUpperCase() + swedishDate.slice(1);
         document.getElementById('live-time').innerText = swedishTime;
     }
 
-    // هر ۱ ثانیه ساعت آپدیت می‌شود
+    // آپدیت ثانیه‌ای ساعت
     setInterval(updateClock, 1000);
-    updateClock(); // برای بار اول بلافاصله اجرا شود
+    updateClock(); // اجرای فوری با لود شدن صفحه
 </script>
