@@ -1,365 +1,258 @@
-
 <!DOCTYPE html>
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Begreppslista v.15 - Med Ljud & Footer</title>
+    <title>Begreppslista v.15 - Professionell Version</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --bg-color: #f0f4f8;
-            --text-color: #2d3748;
-            --primary-color: #e06c75;
-            --card-bg: #ffffff;
-            --border-color: #e2e8f0;
-            --nav-bg: #2d3748;
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --font-family: 'Segoe UI', Roboto, sans-serif;
+            --bg-color: #f0f4f8; --text-color: #2d3748; --primary-color: #e06c75;
+            --card-bg: #ffffff; --border-color: #e2e8f0; --nav-bg: #2d3748;
         }
-
-        [data-theme="dark"] {
-            --bg-color: #1a202c;
-            --text-color: #f7fafc;
-            --card-bg: #2d3748;
-            --border-color: #4a5568;
-            --nav-bg: #11141a;
-        }
-
-        body {
-            font-family: var(--font-family); background-color: var(--bg-color); color: var(--text-color);
-            margin: 0; padding: 0; line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        nav { background-color: var(--nav-bg); box-shadow: var(--shadow-md); position: sticky; top: 0; z-index: 1000; }
-        nav .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 60px; }
-        .nav-links { display: flex; height: 100%; align-items: center; }
-        nav a { color: #a0aec0; text-decoration: none; font-weight: 600; padding: 0 15px; height: 100%; display: flex; align-items: center; font-size: 0.95rem; }
-        nav a:hover, nav a.active { color: #ffffff; }
-        nav a.active { border-bottom: 4px solid var(--primary-color); background-color: rgba(255,255,255,0.05); }
-
-        .nav-right { display: flex; align-items: center; gap: 15px; }
-        .user-name { color: #a0aec0; font-size: 0.9rem; font-weight: 600; }
-
-        .dark-mode-btn {
-            background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff;
-            padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 5px;
-        }
-
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px 50px 20px; flex: 1; }
-        .box { background-color: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 25px; box-shadow: var(--shadow-md); }
-        .section-title { font-size: 1.5rem; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        nav { background: var(--nav-bg); padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        nav a { color: #a0aec0; text-decoration: none; margin-right: 15px; font-weight: bold; }
+        nav a.active { color: white; border-bottom: 2px solid var(--primary-color); }
+        .container { max-width: 800px; margin: 20px auto; padding: 20px; flex: 1; width: 90%; }
+        .box { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
         
-        .flashcard-area { display: flex; justify-content: center; margin: 30px 0; width: 100%; }
-        .flashcard { width: 600px; height: 350px; perspective: 1000px; cursor: pointer; }
+        /* Flashcards */
+        .flashcard { width: 100%; height: 280px; perspective: 1000px; margin: 20px 0; cursor: pointer; }
         .flashcard-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
         .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
-        .flashcard-front, .flashcard-back {
-            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 35px; box-sizing: border-box;
-            border-radius: 16px; background-color: var(--card-bg); border: 2px solid var(--border-color); box-shadow: var(--shadow-md);
-        }
-        .flashcard-back { transform: rotateY(180deg); }
-        
-        .btn { background-color: var(--primary-color); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; }
-        .btn-secondary { background-color: #718096; }
-        
-        .option-btn { background-color: var(--card-bg); border: 2px solid var(--border-color); padding: 16px; border-radius: 12px; cursor: pointer; margin-bottom: 12px; width: 100%; text-align: left; color: var(--text-color); }
-        .option-btn.correct { background-color: #c6f6d5 !important; color: #22543d !important; }
-        .option-btn.wrong { background-color: #fed7d7 !important; color: #822727 !important; }
-        
-        .timer-bar { height: 6px; background-color: #e06c75; width: 100%; border-radius: 3px; transition: width 1s linear; margin-bottom: 15px; }
+        .flashcard-front, .flashcard-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 2px solid var(--border-color); border-radius: 15px; padding: 30px; box-sizing: border-box; background: white; }
+        .flashcard-back { transform: rotateY(180deg); background: #fdf2f2; font-size: 1.1rem; }
 
-        footer {
-            background-color: var(--nav-bg);
-            color: #a0aec0;
-            text-align: center;
-            padding: 15px 20px;
-            font-size: 0.9rem;
-            margin-top: auto;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
+        .btn { background: var(--primary-color); color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 5px; transition: 0.2s; }
+        .btn:hover { opacity: 0.8; transform: translateY(-1px); }
+        .btn-secondary { background: #718096; }
+        
+        .timer-bar { height: 10px; background: #edf2f7; border-radius: 5px; margin-bottom: 20px; overflow: hidden; }
+        .timer-fill { height: 100%; background: var(--primary-color); width: 100%; transition: width 1s linear; }
+        
+        .option-btn { display: block; width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid var(--border-color); border-radius: 10px; background: white; text-align: left; cursor: pointer; font-size: 1rem; transition: 0.2s; }
+        .option-btn:hover { border-color: var(--primary-color); background: #fffafb; }
+        .correct { background: #c6f6d5 !important; border-color: #48bb78 !important; color: #22543d; }
+        .wrong { background: #fed7d7 !important; border-color: #e53e3e !important; color: #822727; }
+        footer { text-align: center; padding: 20px; background: var(--nav-bg); color: white; margin-top: auto; }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-container">
-            <div class="nav-links">
-                <a href="index.html">🏠 Hem</a>
-                <a href="Begreppslista-v15.html" class="active">📖 Begrepp v.15</a>
-                <a href="Helhetsperspektiv.html">🎯 Helhetsperspektiv</a>
-            </div>
-            <div class="nav-right">
-                <span class="user-name">👤 underskoterskavok252</span>
-                <button class="dark-mode-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+
+<nav>
+    <div>
+        <a href="index.html">🏠 Hem</a>
+        <a href="#" class="active">📖 Begrepp v.15</a>
+    </div>
+    <span style="font-size: 0.8rem;">👤 underskoterskavok252</span>
+</nav>
+
+<div class="container">
+    <div id="study-section" class="box">
+        <h2 style="text-align: center; color: var(--primary-color);">📖 Studera Begrepp (19 st)</h2>
+        <p style="text-align: center; font-size: 0.9rem; color: #666;">Klicka روی 🌐 för äkta röst (Lexin)</p>
+        <div style="text-align: center; margin-bottom: 25px;">
+            <button class="btn" onclick="startFlashcards()">Öva Flashcards 🗂️</button>
+            <button class="btn btn-secondary" onclick="startQuiz()">Gör Quiz (40s) 🎯</button>
+        </div>
+        <div id="terms-list"></div>
+    </div>
+
+    <div id="flashcard-section" class="box" style="display:none;">
+        <h2 style="text-align: center;">🗂️ Flashcards</h2>
+        <div class="flashcard" id="f-card" onclick="this.classList.toggle('flipped')">
+            <div class="flashcard-inner">
+                <div class="flashcard-front"><h2 id="f-front" style="color:var(--primary-color)">Begrepp</h2><small>Klicka för att se förklaring</small></div>
+                <div class="flashcard-back"><p id="f-back">Förklaring</p></div>
             </div>
         </div>
-    </nav>
-
-    <div class="container">
-        <h1 style="text-align:center; color:var(--primary-color);">Begreppslista för underskoterskavok252</h1>
-        
-        <div id="study-section" class="box">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); margin-bottom: 15px; padding-bottom: 10px;">
-                <h2 style="margin: 0; font-size: 1.5rem;">📖 Studera begrepp v 15 (19 st)</h2>
-                <span style="font-size: 0.9rem; color: #718096;">Klicka på 🔊 för att lyssna</span>
-            </div>
-            
-            <div style="text-align: center; margin-bottom: 25px; background-color: rgba(0,0,0,0.02); padding: 15px; border-radius: 10px;">
-                <button class="btn" onclick="startFlashcards()">Öva med Flashcards 🗂️</button>
-                <button class="btn btn-secondary" style="margin-left:10px;" onclick="startQuiz()">Gör Begrepp v 15 quiz 🎯</button>
-            </div>
-
-            <div id="terms-list"></div>
-        </div>
-
-        <div id="flashcard-section" class="box" style="display:none;">
-            <h2 class="section-title">🗂️ Flashcards (Leitner System)</h2>
-            <p style="text-align:center; color:#718096;">Klicka på kortet för att vända. Begreppet läses upp först! 🔊</p>
-            
-            <div class="flashcard-area">
-                <div class="flashcard">
-                    <div class="flashcard-inner">
-                        <div class="flashcard-front" onclick="flipCard()">
-                            <h2 style="color: var(--primary-color); font-size: 2.2rem;" id="card-front-text">Begrepp</h2>
-                            <button class="btn btn-secondary" style="margin-top: 20px; font-size: 0.9rem;" onclick="event.stopPropagation(); speakCurrentTerm();">Lyssna på begreppet 🔊</button>
-                        </div>
-                        <div class="flashcard-back" onclick="flipCard()">
-                            <p id="card-back-swedish" style="font-size: 1.2rem; line-height: 1.6;">Svensk förklaring</p>
-                            <button class="btn btn-secondary" style="margin-top: 20px; font-size: 0.9rem;" onclick="event.stopPropagation(); speakCurrentDef();">Lyssna på förklaringen 🔊</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                <div style="display:flex; gap: 10px;">
-                    <button class="btn" style="background-color:#e06c75;" onclick="markCard(false)">Kunde inte ❌</button>
-                    <button class="btn" style="background-color:#48bb78;" onclick="markCard(true)">Kunde det! ✔️</button>
-                </div>
-                <span id="card-counter" style="font-weight: 600;">1 / 19</span>
-                <button class="btn btn-secondary" style="font-size: 0.9rem;" onclick="showStudy()">Avbryt och till listen</button>
-            </div>
-        </div>
-
-        <div id="quiz-section" class="box" style="display:none;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h2 class="section-title">🎯 Begrepp v 15 quiz (19 frågor)</h2>
-                <div style="font-weight:700;">Poäng: <span id="current-score">0</span></div>
-            </div>
-            <div class="timer-bar" id="timer"></div>
-            <div id="quiz-content">
-                <div id="question-text" style="font-weight:700; font-size:1.2rem; margin-bottom:20px;">Laddar...</div>
-                <div id="options"></div>
-                <div id="feedback" style="font-weight:700; text-align:center; margin-top:15px;"></div>
-                <button id="next-btn" class="btn" style="display:none; margin: 15px auto 0 auto;" onclick="nextQuestion()">Nästa fråga ➡️</button>
-            </div>
+        <div style="text-align: center;">
+            <button class="btn" style="background:#48bb78" onclick="nextCard()">Kunde det! ✔️</button>
+            <button class="btn btn-secondary" onclick="nextCard()">Nästa kort ➡️</button>
+            <p id="card-counter" style="font-weight:bold">1/19</p>
+            <button class="btn btn-secondary" style="font-size:0.7rem" onclick="location.reload()">Avbryt och gå tillbaka</button>
         </div>
     </div>
 
-    <footer>
-        © 2026 - Mohsen Naderi
-    </footer>
+    <div id="quiz-section" class="box" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3>🎯 Quiz</h3>
+            <p style="font-weight:bold">Poäng: <span id="score">0</span>/19</p>
+        </div>
+        <div class="timer-bar"><div id="timer-fill" class="timer-fill"></div></div>
+        <div id="q-text" style="font-weight:bold; margin-bottom:20px; font-size:1.2rem; min-height: 3em;">Laddar...</div>
+        <div id="q-options"></div>
+        <button id="q-next" class="btn" style="display:none; margin-top:20px; width:100%" onclick="nextQuestion()">Nästa fråga ➡️</button>
+    </div>
+</div>
 
-    <script>
-        const termsData = [
-            { term: "Demokratisk värdegrund", sv: "Alla människor har lika värde, rätt att bli respekterade och rätt att vara delaktiga i samhället." },
-            { term: "Lika värde", sv: "Alla människor är olika och har unika förmågor. Det som är olika berikar och behövs för att utveckling ska ske." },
-            { term: "Likvärdighet", sv: "Något ska vara lika bra för alla. Alla ska ha rätt till samma vård." },
-            { term: "Inkludering", sv: "Alla människor får vara med och känna sig delaktiga, oavsett funktionsnedsättning, ålder eller bakgrund." },
-            { term: "Tillgänglighet", sv: "Innebär att alla miljöer i samhället ska vara förberedda på att alla är olika och har olika behov. Alla ska känna sig välkomna och vara en del i sammanhanget." },
-            { term: "Levnadsvillkor", sv: "Handlar om hur en person lever och vilka möjligheter personen har till ett bra och tryggt liv." },
-            { term: "Delaktighet", sv: "Betyder att få vara med, påverka och känna att man är viktig i sitt eget liv." },
-            { term: "Delaktighetsmodellen", sv: "Är ett arbetssätt för att stärka inflytande och självbestämmande för personer i behov av stöd. Modellen bygger på 6 olika delar." },
-            { term: "Livskvalitet", sv: "Handlar om brukarens hälsa och välmående. Att känna sig välkommen, behövd och ha en meningsfull fritid." },
-            { term: "Normer", sv: "Förväntningar, tankar och oskrivna regler om hur någonting är eller ska vara." },
-            { term: "Värderingar", sv: "Att man får tycka och tänka som man vill och det styr vad vi gör och vad vi säger." },
-            { term: "Funktionsförmåga", sv: "Beskriver hur en person fungerar fysiskt, psykiskt, kognitivt och socialt." },
-            { term: "Fysisk funktionsförmåga", sv: "Nedsatt rörelseförmåga, nedsatt syn, nedsatt hörsel. Man kan födas med det eller få det senare i livet." },
-            { term: "Psykisk funktionsförmåga", sv: "Trauma, sexuellt övergrepp, krig, livssituation." },
-            { term: "Kognitiv funktionsförmåga", sv: "Svårt med inlärning, minne, svårt att ta in information eller förmedla information, bli störd av olika ljud." },
-            { term: "Social funktionsförmåga", sv: "Svårigheter med att skapa och bibehålla relationer." },
-            { term: "Funktionsnedsättning", sv: "Betyder att en funktion är nedsatt och fungerar på ett annorlunda sätt eller inte alls." },
-            { term: "Funktionshinder", sv: "Uppstår när omgivningen gör det svårt för en person med funktionsnedsättning att vara delaktig på lika villkor." },
-            { term: "Självbestämmande", sv: "Betyder att en person får vara med och bestämma över sitt eget liv." }
-        ];
+<footer>© 2026 - Mohsen Naderi</footer>
 
-        let activeCards = [...termsData];
-        let failedCards = [];
-        let currentCardIndex = 0;
+<script>
+const termsData = [
+    { term: "Demokratisk värdegrund", sv: "Alla människor har lika värde, rätt att bli respekterade och rätt att vara delaktiga i samhället." },
+    { term: "Lika värde", sv: "Alla människor är olika och har unika förmågor. Det som är olika berikar och behövs." },
+    { term: "Likvärdighet", sv: "Något ska vara lika bra för alla. Alla ska ha rätt till samma vård." },
+    { term: "Inkludering", sv: "Alla människor får vara med och känna sig delaktiga, oavsett funktionsnedsättning." },
+    { term: "Tillgänglighet", sv: "Innebär att alla miljöer i samhället ska vara förberedda på att alla är olika." },
+    { term: "Levnadsvillkor", sv: "Handlar om hur en person lever och vilka möjligheter personen har till ett bra liv." },
+    { term: "Delaktighet", sv: "Betyder att få vara med, påverka och känna att man är viktig i sitt eget liv." },
+    { term: "Delaktighetsmodellen", sv: "Är ett arbetssätt för att stärka inflytande och självbestämmande." },
+    { term: "Livskvalitet", sv: "Handlar om brukarens hälsa och välmående. Att känna sig välkommen." },
+    { term: "Normer", sv: "Förväntningar, tankar och oskrivna regler om hur någonting ska vara." },
+    { term: "Värderingar", sv: "Att man får tycka och tänka som man vill och det styr vad vi gör." },
+    { term: "Funktionsförmåga", sv: "Beskriver hur en person fungerar fysiskt, psykiskt, kognitivt och socialt." },
+    { term: "Fysisk funktionsförmåga", sv: "Nedsatt rörelseförmåga, nedsatt syn, nedsatt hörsel." },
+    { term: "Psykisk funktionsförmåga", sv: "Trauma, sexuellt övergrepp, krig, livssituation." },
+    { term: "Kognitiv funktionsförmåga", sv: "Svårt med inlärning, minne, svårt att ta in information." },
+    { term: "Social funktionsförmåga", sv: "Svårigheter med att skapa och bibehålla relationer." },
+    { term: "Funktionsnedsättning", sv: "Betyder att en funktion är nedsatt och fungerar på ett annorlunda sätt." },
+    { term: "Funktionshinder", sv: "Uppstår när omgivningen gör det svårt för en person med funktionsnedsättning." },
+    { term: "Självbestämmande", sv: "Betyder att en person får vara med och bestämma över sitt eget liv." }
+];
 
-        let currentQuizIndex = 0;
-        let score = 0;
-        let quizQuestions = [];
-        let timerInterval;
-        let timeLeft = 40;
+let currentIndex = 0;
+let quizScore = 0;
+let timer;
+let timeLeft = 40;
+let shuffledQuiz = [];
 
-        function speakSwedish(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'sv-SE';
-                utterance.rate = 0.85;
-                window.speechSynthesis.speak(utterance);
-            }
-        }
+// --- Förbättrad Röst (تلفظ شمرده) ---
+function speak(text) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'sv-SE';
+    u.rate = 0.75; // Långsammare för tydlighet
+    u.pitch = 1.0;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const svVoice = voices.find(v => v.lang === 'sv-SE' && (v.name.includes('Google') || v.name.includes('Premium')));
+    if (svVoice) u.voice = svVoice;
+    
+    window.speechSynthesis.speak(u);
+}
 
-        window.onload = function() { populateTermsList(); }
-
-        function populateTermsList() {
-            const listDiv = document.getElementById('terms-list');
-            listDiv.innerHTML = "";
-            termsData.forEach(item => {
-                const row = document.createElement('div');
-                row.style.padding = '10px';
-                row.style.borderBottom = '1px solid var(--border-color)';
-                row.style.display = 'flex';
-                row.style.justifyContent = 'space-between';
-                row.style.alignItems = 'center';
-                
-                row.innerHTML = `
-                    <span><b style="color:var(--primary-color);">${item.term}</b> - ${item.sv}</span>
-                    <div style="display: flex; gap: 5px;">
-                        <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.8rem;" onclick="speakSwedish('${item.term.replace(/'/g, "\\'")}')">Term 🔊</button>
-                        <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.8rem;" onclick="speakSwedish('${item.sv.replace(/'/g, "\\'")}')">Def 🔊</button>
-                    </div>
-                `;
-                listDiv.appendChild(row);
-            });
-        }
-
-        function showStudy() { document.getElementById('study-section').style.display = 'block'; document.getElementById('flashcard-section').style.display = 'none'; document.getElementById('quiz-section').style.display = 'none'; }
+// --- Skapa listan med Lexin-länkar ---
+function populateList() {
+    const listDiv = document.getElementById('terms-list');
+    listDiv.innerHTML = "";
+    termsData.forEach(item => {
+        const d = document.createElement('div');
+        d.style.padding = "12px"; d.style.borderBottom = "1px solid #eee";
+        d.style.display = "flex"; d.style.justifyContent = "space-between"; d.style.alignItems = "center";
         
-        function startFlashcards() { 
-            document.getElementById('study-section').style.display = 'none'; 
-            document.getElementById('flashcard-section').style.display = 'block'; 
-            activeCards = [...termsData];
-            failedCards = [];
-            currentCardIndex = 0; 
-            updateFlashcard(); 
-        }
+        const firstWord = item.term.split(' ')[0];
+        const lexinUrl = `https://lexin.nada.kth.se/lexin/#searchinfo=0;itemid=0;text=${firstWord};`;
+        
+        d.innerHTML = `
+            <div style="flex:1"><b>${item.term}</b>: ${item.sv}</div>
+            <div style="display:flex; gap:10px; margin-left:10px;">
+                <button class="btn" style="padding:5px 10px; margin:0;" onclick="speak('${item.term}')">🔊</button>
+                <a href="${lexinUrl}" target="_blank" title="Hör äkta röst" style="text-decoration:none; font-size:1.3rem;">🌐</a>
+            </div>
+        `;
+        listDiv.appendChild(d);
+    });
+}
 
-        function updateFlashcard() {
-            document.querySelector('.flashcard').classList.remove('flipped');
-            setTimeout(() => {
-                const currentTerm = activeCards[currentCardIndex].term;
-                document.getElementById('card-front-text').innerText = currentTerm;
-                document.getElementById('card-back-swedish').innerText = activeCards[currentCardIndex].sv;
-                document.getElementById('card-counter').innerText = `${currentCardIndex + 1} / ${activeCards.length} (Kvar: ${activeCards.length + failedCards.length})`;
-                
-                speakSwedish(currentTerm);
-            }, 150);
-        }
+// --- Flashcard Funktioner ---
+function startFlashcards() {
+    document.getElementById('study-section').style.display = 'none';
+    document.getElementById('flashcard-section').style.display = 'block';
+    currentIndex = 0;
+    showCard();
+}
 
-        function speakCurrentTerm() { speakSwedish(activeCards[currentCardIndex].term); }
-        function speakCurrentDef() { speakSwedish(activeCards[currentCardIndex].sv); }
-        function flipCard() { document.querySelector('.flashcard').classList.toggle('flipped'); }
+function showCard() {
+    document.getElementById('f-card').classList.remove('flipped');
+    document.getElementById('f-front').innerText = termsData[currentIndex].term;
+    document.getElementById('f-back').innerText = termsData[currentIndex].sv;
+    document.getElementById('card-counter').innerText = `${currentIndex + 1}/19`;
+    speak(termsData[currentIndex].term);
+}
 
-        function markCard(known) {
-            if (!known) failedCards.push(activeCards[currentCardIndex]);
-            
-            currentCardIndex++;
-            if (currentCardIndex >= activeCards.length) {
-                if (failedCards.length > 0) {
-                    alert("Du har några kort kvar att öva på!");
-                    activeCards = [...failedCards];
-                    failedCards = [];
-                    currentCardIndex = 0;
-                    updateFlashcard();
-                } else {
-                    confetti();
-                    alert("Bra jobbat! Du har klarat alla 19 kort!");
-                    showStudy();
-                }
-            } else {
-                updateFlashcard();
-            }
-        }
+function nextCard() {
+    currentIndex++;
+    if (currentIndex < 19) showCard();
+    else { confetti(); alert("Bra jobbat! Du har gått igenom alla kort."); location.reload(); }
+}
 
-        function startQuiz() { 
-            document.getElementById('study-section').style.display = 'none'; 
-            document.getElementById('quiz-section').style.display = 'block'; 
-            currentQuizIndex = 0; score = 0; 
-            quizQuestions = [...termsData].sort(() => Math.random() - 0.5); 
-            document.getElementById('current-score').innerText = score;
-            generateQuizQuestion(); 
-        }
+// --- Quiz Funktioner ---
+function startQuiz() {
+    document.getElementById('study-section').style.display = 'none';
+    document.getElementById('quiz-section').style.display = 'block';
+    shuffledQuiz = [...termsData].sort(() => Math.random() - 0.5);
+    currentIndex = 0; quizScore = 0;
+    loadQuestion();
+}
 
-        function generateQuizQuestion() {
-            clearInterval(timerInterval);
-            timeLeft = 40;
-            document.getElementById('timer').style.width = '100%';
-            
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                document.getElementById('timer').style.width = (timeLeft / 40) * 100 + '%';
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    checkAnswer(null, false);
-                }
-            }, 1000);
+function loadQuestion() {
+    clearInterval(timer);
+    timeLeft = 40;
+    document.getElementById('timer-fill').style.width = "100%";
+    document.getElementById('q-next').style.display = "none";
+    
+    const q = shuffledQuiz[currentIndex];
+    document.getElementById('q-text').innerText = `Fråga ${currentIndex + 1}/19: Vad betyder "${q.term}"?`;
+    speak(q.term);
 
-            const current = quizQuestions[currentQuizIndex];
-            document.getElementById('question-text').innerText = `(${currentQuizIndex + 1}/19) Vad betyder "${current.term}"?`;
-            
-            speakSwedish(current.term);
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer-fill').style.width = (timeLeft / 40) * 100 + "%";
+        if (timeLeft <= 0) { clearInterval(timer); checkAns(null, false); }
+    }, 1000);
 
-            const optionsDiv = document.getElementById('options');
-            optionsDiv.innerHTML = ""; document.getElementById('feedback').innerText = ""; document.getElementById('next-btn').style.display = "none";
+    let opts = [q];
+    while(opts.length < 3) {
+        const r = termsData[Math.floor(Math.random()*19)];
+        if(!opts.includes(r)) opts.push(r);
+    }
+    opts.sort(() => Math.random() - 0.5);
 
-            let options = [current];
-            while (options.length < 3) {
-                let rand = termsData[Math.floor(Math.random() * termsData.length)];
-                if (!options.includes(rand)) options.push(rand);
-            }
-            options.sort(() => Math.random() - 0.5);
+    const div = document.getElementById('q-options');
+    div.innerHTML = "";
+    opts.forEach(o => {
+        const b = document.createElement('button');
+        b.className = 'option-btn';
+        b.innerText = o.sv;
+        b.onclick = () => checkAns(b, o === q);
+        div.appendChild(b);
+    });
+}
 
-            options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt.sv;
-                btn.onclick = () => checkAnswer(btn, opt === current);
-                optionsDiv.appendChild(btn);
-            });
-        }
+function checkAns(btn, correct) {
+    clearInterval(timer);
+    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+    if(correct) {
+        if(btn) btn.classList.add('correct');
+        quizScore++;
+        document.getElementById('score').innerText = quizScore;
+    } else {
+        if(btn) btn.classList.add('wrong');
+        document.querySelectorAll('.option-btn').forEach(b => {
+            if(b.innerText === shuffledQuiz[currentIndex].sv) b.classList.add('correct');
+        });
+    }
+    document.getElementById('q-next').style.display = "block";
+}
 
-        function checkAnswer(selectedBtn, isCorrect) {
-            clearInterval(timerInterval);
-            const buttons = document.querySelectorAll('.option-btn');
-            buttons.forEach(btn => btn.disabled = true);
-            
-            if (isCorrect) { 
-                selectedBtn.classList.add('correct'); 
-                score++; 
-                document.getElementById('current-score').innerText = score;
-            } else { 
-                if (selectedBtn) selectedBtn.classList.add('wrong'); 
-                buttons.forEach(btn => { if (btn.innerText === quizQuestions[currentQuizIndex].sv) btn.classList.add('correct'); }); 
-            }
-            document.getElementById('next-btn').style.display = "block";
-        }
+function nextQuestion() {
+    currentIndex++;
+    if (currentIndex < 19) loadQuestion();
+    else {
+        confetti();
+        document.getElementById('quiz-section').innerHTML = `<h2>Klar! Poäng: ${quizScore}/19</h2><button class="btn" onclick="location.reload()">Hem</button>`;
+    }
+}
 
-        function nextQuestion() { 
-            currentQuizIndex++; 
-            if (currentQuizIndex < quizQuestions.length) generateQuizQuestion(); 
-            else {
-                document.getElementById('quiz-content').innerHTML = `<h3>Klar! Din poäng: ${score} / ${quizQuestions.length}</h3><button class="btn" onclick="startQuiz()">Gör om</button>`; 
-                if(score === 19) confetti();
-            }
-        }
+window.onload = () => {
+    populateList();
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+    }
+};
+</script>
 
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', targetTheme);
-            localStorage.setItem('theme', targetTheme);
-        }
-        if (localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-    </script>
 </body>
 </html>
-
-Beta
-0 / 0
-used queries
-1
