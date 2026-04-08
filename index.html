@@ -1,5 +1,24 @@
 <!DOCTYPE html>
 <html lang="sv">
+    <style>
+    .shop-link {
+        background: #ff0050; /* قرمز تیک‌تاکی */
+        color: white !important;
+        padding: 8px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: 0.3s;
+    }
+    .shop-link:hover {
+        background: #d00040;
+        transform: scale(1.05);
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,6 +61,9 @@
         .dark-mode-btn {
             background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff;
             padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 5px;
+            <a href="https://underskoterskavok252.github.io/shop/" class="shop-link">
+    <i class="fas fa-shopping-cart"></i> Köp Kurslitteratur
+</a>
         }
 
         .container { max-width: 1200px; margin: 30px auto; padding: 0 20px 50px 20px; flex: 1; }
