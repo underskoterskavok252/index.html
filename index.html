@@ -107,18 +107,13 @@
             <a href="Begreppslista-v15.html" class="btn">Gå till Begreppslista 🚀</a>
         </div>
     </div>
-<div class="container" style="margin-top: 40px;">
-    <div class="box" style="background: #edf2f7; border-color: #cbd5e0;">
-        <h3><i class="fas fa-lightbulb" style="color: #e06c75;"></i> Saknar du något begrepp?</h3>
-        <p style="font-size: 1rem;">Hjälp oss att bli bättre! Skriv vilket ord eller ämne du vill att vi förklarar härnäst.</p>
-        
-        <form action="mailto:underskoterskavok252@gmail.com" method="post" enctype="text/plain" style="text-align: left; display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin: 0 auto;">
-            <label style="font-weight: bold; font-size: 0.9rem;">Föreslå ett begrepp:</label>
-            <input type="text" name="new_word" placeholder="T.ex. 'Parenteral'" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <button type="submit" style="background: #2d3748; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Skicka förslag</button>
-        </form>
-    </div>
-</div>
+<form action="https://formspree.io/f/xdapjzeg" method="POST" style="text-align: left; display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin: 0 auto;">
+    <label style="font-weight: bold; font-size: 0.9rem; color: var(--text-color);">Föreslå ett begrepp eller ge feedback:</label>
+    <input type="text" name="subject" value="Förslag från studieportalen" hidden>
+    <input type="text" name="new_word" placeholder="Vilket ord saknar du?" required style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+    <input type="email" name="_replyto" placeholder="Din e-post" required style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+    <button type="submit" style="background: #2d3748; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Skicka förslag</button>
+</form>
     
     <footer>
         © 2026 - Mohsen Naderi | <a href="https://underskoterskavok252.github.io/shop/" style="color: #a0aec0;">Besök Bokshoppen</a>
