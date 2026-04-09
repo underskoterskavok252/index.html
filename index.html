@@ -42,7 +42,6 @@
         .nav-right { display: flex; align-items: center; gap: 15px; }
         .user-name { color: #a0aec0; font-size: 0.8rem; font-weight: 600; }
 
-        /* Style برای دکمه فروشگاه */
         .shop-link {
             background: #ff0050;
             color: white !important;
@@ -67,50 +66,23 @@
             padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; gap: 5px;
         }
 
-        /* Container */
         .container { max-width: 1200px; margin: 30px auto; padding: 0 20px 50px 20px; flex: 1; }
-        .box { background-color: var(--card-bg); padding: 40px; border-radius: 16px; border: 1px solid var(--border-color); text-align: center; box-shadow: var(--shadow-md); }
+        .box { background-color: var(--card-bg); padding: 40px; border-radius: 16px; border: 1px solid var(--border-color); text-align: center; box-shadow: var(--shadow-md); margin-bottom: 30px;}
         h1 { color: var(--primary-color); margin-bottom: 10px; font-size: 2.2rem; }
         p { font-size: 1.1rem; color: var(--text-color); margin-bottom: 30px; }
 
         .btn { background-color: var(--primary-color); color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: 700; cursor: pointer; text-decoration: none; font-size: 1.1rem; display: inline-block; transition: background 0.2s; }
         .btn:hover { background-color: #d05b65; }
 
-        footer {
-            background-color: var(--nav-bg); color: #a0aec0; text-align: center; padding: 15px 20px; font-size: 0.8rem; margin-top: auto;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        /* Form Style */
+        .feedback-form {
+            text-align: left; display: flex; flex-direction: column; gap: 15px; max-width: 500px; 
+            margin: 40px auto; padding: 25px; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color);
         }
     </style>
 </head>
-    <footer style="background-color: #2d3748; color: #edf2f7; padding: 40px 20px; margin-top: 50px; font-family: sans-serif;">
-    <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between;">
-        
-        <div style="flex: 1; min-width: 250px;">
-            <h4 style="color: #63b3ed; border-bottom: 2px solid #4a5568; padding-bottom: 10px;">Om Studieportalen</h4>
-            <p style="font-size: 0.9rem; line-height: 1.6; color: #cbd5e0;">
-                Denna portal är skapad som ett pedagogiskt verktyg för studenter inom Vård och Omsorg. Vi hjälper framtidens hjältar att bemästra medicinsk terminologi och hitta de bästa verktygen för yrkeslivet.
-            </p>
-        </div>
-
-        <div style="flex: 1; min-width: 250px;">
-            <h4 style="color: #63b3ed; border-bottom: 2px solid #4a5568; padding-bottom: 10px;">Integritet & Annonser</h4>
-            <p style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e0;">
-                <b>Annonsmärkning:</b> Sidan innehåller annonslänkar (affiliatelänkar). Om du köper något via våra länkar får vi en liten provision, vilket hjälper oss att driva portalen vidare. Det kostar inget extra för dig.
-            </p>
-            <p style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e0; margin-top: 10px;">
-                <b>Integritetspolicy (GDPR):</b> Vi samlar inte in några personuppgifter från våra besökare. Våra samarbetspartners (Adtraction) kan använda cookies för att spåra köp och säkerställa att provisionen blir rätt.
-            </p>
-        </div>
-
-        <div style="flex: 1; min-width: 200px;">
-            <h4 style="color: #63b3ed; border-bottom: 2px solid #4a5568; padding-bottom: 10px;">Kontakt</h4>
-            <p style="font-size: 0.9rem; color: #cbd5e0;">📧 <a href="mailto:info@din-sida.se" style="color: #63b3ed; text-decoration: none;">Kontakt via e-post</a></p>
-            <p style="font-size: 0.8rem; margin-top: 20px; color: #a0aec0;">© 2026 Vård & Omsorg Studieportal. All rights reserved.</p>
-        </div>
-
-    </div>
-</footer>
 <body>
+
     <nav>
         <div class="nav-container">
             <div class="nav-links">
@@ -134,18 +106,44 @@
             <p>Välj ett område i menyn ovan eller klicka på knappen nedan för att börja öva på begreppen inför vecka 15!</p>
             <a href="Begreppslista-v15.html" class="btn">Gå till Begreppslista 🚀</a>
         </div>
-    </div>
-<form action="https://formspree.io/f/xdapjzeg" method="POST" style="text-align: left; display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin: 0 auto;">
-    <label style="font-weight: bold; font-size: 0.9rem; color: var(--text-color);">Föreslå ett begrepp eller ge feedback:</label>
-    <input type="text" name="subject" value="Förslag från studieportalen" hidden>
-    <input type="text" name="new_word" placeholder="Vilket ord saknar du?" required style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-    <input type="email" name="_replyto" placeholder="Din e-post" required style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-    <button type="submit" style="background: #2d3748; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Skicka förslag</button>
-</form>
 
-    
-    <footer>
-        © 2026 - Mohsen Naderi | <a href="https://underskoterskavok252.github.io/shop/" style="color: #a0aec0;">Besök Bokshoppen</a>
+        <div class="feedback-form">
+            <form action="https://formspree.io/f/xdapjzeg" method="POST" style="display: flex; flex-direction: column; gap: 10px;">
+                <label style="font-weight: bold; font-size: 0.9rem; color: var(--text-color);">Föreslå ett begrepp eller ge feedback:</label>
+                <input type="text" name="subject" value="Förslag från studieportalen" hidden>
+                <input type="text" name="new_word" placeholder="Vilket ord saknar du?" required style="padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color);">
+                <input type="email" name="_replyto" placeholder="Din e-post" required style="padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color);">
+                <button type="submit" style="background: var(--nav-bg); color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s;">Skicka förslag</button>
+            </form>
+        </div>
+    </div>
+
+    <footer style="background-color: #2d3748; color: #edf2f7; padding: 40px 20px; margin-top: auto; font-family: sans-serif;">
+        <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; text-align: left;">
+            
+            <div style="flex: 1; min-width: 250px;">
+                <h4 style="color: #63b3ed; border-bottom: 2px solid #4a5568; padding-bottom: 10px;">Om Studieportalen</h4>
+                <p style="font-size: 0.9rem; line-height: 1.6; color: #cbd5e0;">
+                    Denna portal är skapad som ett pedagogiskt verktyگ för studenter inom Vård och Omsorg. Vi hjälper framtidens hjältar att bemästra medicinsk terminologi.
+                </p>
+            </div>
+
+            <div style="flex: 1; min-width: 250px;">
+                <h4 style="color: #63b3ed; border-bottom: 2px solid #4a5568; padding-bottom: 10px;">Integritet & Annonser</h4>
+                <p style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e0;">
+                    <b>Annonsmärkning:</b> Sidan innehåller annonslänkar. Vi får provision på köp via länkar, vilket stöder portalen.
+                    <br><br>
+                    <b>GDPR:</b> Vi samlar inte in personuppgifter. Cookies används endast av partners (Adtraction) för att spåra köp.
+                </p>
+            </div>
+
+            <div style="flex: 1; min-width: 200px;">
+                <h4 style="color: #63b3ed; border-bottom: 2px solid #4a5568; padding-bottom: 10px;">Kontakt & Info</h4>
+                <p style="font-size: 0.9rem; color: #cbd5e0;">📧 <a href="mailto:info@din-sida.se" style="color: #63b3ed; text-decoration: none;">E-post Support</a></p>
+                <p style="font-size: 0.9rem; color: #cbd5e0; margin-top: 10px;">📚 <a href="https://underskoterskavok252.github.io/shop/" style="color: #63b3ed; text-decoration: none;">Besök Bokshoppen</a></p>
+                <p style="font-size: 0.8rem; margin-top: 20px; color: #a0aec0;">© 2026 - Mohsen Naderi. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
     <script>
